@@ -19,8 +19,9 @@ class Job extends Model
         'deadline',
         'conditions',
     ];
-    public function users(){
-        return $this->belongsToMany(User::class, 'job_users');
+
+    public function job_applications(){
+        return $this->belongsToMany(JobApplication::class, 'job_applications');
     }
     public function company(){
         return $this->belongsTo(Company::class, 'company_id');

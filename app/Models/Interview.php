@@ -17,4 +17,12 @@ class Interview extends Model
         'type',
     ];
 
+    public function job(){
+        return $this->hasOne(Job::class, 'job_id');
+    }
+
+    public function user(){
+        return $this->hasOne(User::class, 'user_id');
+    }
+
 }

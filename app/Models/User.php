@@ -34,13 +34,13 @@ class User extends Authenticatable
         'status',
         'OIB',
     ];
-
-    public function jobs(){
-        return $this->belongsToMany(Job::class, 'job_users');
+//?
+    public function job_applications(){
+        return $this->belongsToMany(JobApplication::class, 'job_applications');
     }
 
-    public function company(){
-        return $this->belongsToMany(Company::class, 'users_companies');
+    public function interviews(){
+        return $this->belongsToMany(Interview::class, 'interviews');
     }
     /**
      * The attributes that should be hidden for serialization.

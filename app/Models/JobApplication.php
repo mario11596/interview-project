@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class JobUser extends Model
+class JobApplication extends Model
 {
     use HasFactory;
 
@@ -13,4 +13,12 @@ class JobUser extends Model
         'job_id',
         'user_id',
     ];
+
+    public function job(){
+        return $this->hasOne(Job::class, 'job_id');
+    }
+
+    public function user(){
+        return $this->hasOne(User::class, 'user_id');
+    }
 }
