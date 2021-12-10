@@ -25,10 +25,23 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'surname',
         'email',
         'password',
+        'address',
+        'city',
+        'mobile_number',
+        'status',
+        'OIB',
     ];
 
+    public function jobs(){
+        return $this->belongsToMany(Job::class, 'job_users');
+    }
+
+    public function company(){
+        return $this->belongsToMany(Company::class, 'users_companies');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
