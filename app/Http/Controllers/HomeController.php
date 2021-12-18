@@ -10,10 +10,9 @@ class HomeController extends Controller
     public function index()
     {
         $role = Auth::user()->is_company;
-        
+
         if ($role) {
             session()->put('company','1');
-           
         }
     }
 }

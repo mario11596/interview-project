@@ -20,22 +20,26 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::middleware(['auth:sanctum', 'verified'])->get('/candidate_dashboard', function () {
+    return view('candidate_dashboard');
+})->name('candidate_dashboard');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/company_dashboard', function () {
+    return view('company_dashboard');
+})->name('company_dashboard');
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+    $role = Auth::user()->is_company;
 
-
-/*Route::group(['auth:sanctum', 'verified'], function(){
-    Route::get('redirects', 'App\Http\Controllers\HomeController@index');
-    
-    if (Session::has('company')) {
-        Route::get('/dashboard', function () {
-            return view('dashboard');
-        })->name('dashboard');
-    } else {
-
+    if ($role) {
+        session()->put('company','1');
     }
 
-});*/
+    if (Session::has('company')) {
+        return view('company_dashboard');
+    } else {
+        return view('candidate_dashboard');
+    }
+})->name('dashboard');
+
