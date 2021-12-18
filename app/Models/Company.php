@@ -14,8 +14,6 @@ class Company extends Model
         'city',
         'number_employees',
         'type',
-        'email',
-        'password'
     ];
 
     public function job(){
@@ -24,5 +22,9 @@ class Company extends Model
 
     public function interviews(){
         return $this->belongsToMany(Interview::class, 'interviews');
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class, 'email_id');
     }
 }

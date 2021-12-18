@@ -15,23 +15,15 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('surname');
-            $table->string('address');
-            $table->string('city');
-            $table->string('mobile_number');
-            $table->string('status');
-            $table->string('OIB')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
-            $table->foreignId('current_team_id')->nullable();
+            $table->boolean('is_company')->default(false);
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
         });
     }
-
+    
     /**
      * Reverse the migrations.
      *

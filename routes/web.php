@@ -1,6 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +20,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+
+/*Route::group(['auth:sanctum', 'verified'], function(){
+    Route::get('redirects', 'App\Http\Controllers\HomeController@index');
+    
+    if (Session::has('company')) {
+        Route::get('/dashboard', function () {
+            return view('dashboard');
+        })->name('dashboard');
+    } else {
+
+    }
+
+});*/
