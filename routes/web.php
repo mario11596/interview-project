@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
 
 
 /*
@@ -20,6 +19,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::middleware(['auth:sanctum', 'verified'])->get('/candidate_dashboard', [HomeController::class, 'candidate'])->name('candidate_dashboard');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/company_dashboard', [HomeController::class, 'company'])->name('company_dashboard');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+
+/*
 Route::middleware(['auth:sanctum', 'verified'])->get('/candidate_dashboard', function () {
     return view('candidate_dashboard');
 })->name('candidate_dashboard');
@@ -28,7 +34,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/company_dashboard', funct
     return view('company_dashboard');
 })->name('company_dashboard');
 
-
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     $role = Auth::user()->is_company;
 
@@ -36,10 +41,11 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
         session()->put('company','1');
     }
 
-    if (Session::has('company')) {
+    if (Auth::user()->is_company) {
         return view('company_dashboard');
     } else {
         return view('candidate_dashboard');
     }
 })->name('dashboard');
+*/
 
