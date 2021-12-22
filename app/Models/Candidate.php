@@ -11,7 +11,6 @@ class Candidate extends Model
     protected $fillable = [
        'name',
        'email_id',
-       'name',
        'surname',
        'address',
        'city',
