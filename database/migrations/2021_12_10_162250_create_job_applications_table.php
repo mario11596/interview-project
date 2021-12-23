@@ -17,6 +17,7 @@ class CreateJobApplicationsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('job_id');
+            $table->string('status');
             $table->timestamps();
 
             $table->foreign('job_id')

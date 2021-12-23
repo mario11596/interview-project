@@ -16,15 +16,15 @@ class CreateInterviewsTable extends Migration
         Schema::create('interviews', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('company_id');
+            $table->unsignedBigInteger('job_id');
             $table->date('date');
             $table->time('time');
             $table->string('type');
             $table->timestamps();
 
 
-            $table->foreign('company_id')
-                ->references('id')->on('companies')
+            $table->foreign('job_id')
+                ->references('id')->on('jobs')
                 ->onDelete('cascade');
 
             $table->foreign('user_id')
