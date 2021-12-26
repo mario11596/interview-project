@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -23,9 +24,13 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [HomeControll
 
 Route::group(['prefix' => 'company', 'middleware' => ['auth:sanctum', 'verified', 'is.company']], function(){
     Route::get('dashboard', [HomeController::class, 'company'])->name('company_dashboard');
+    Route::get('index', [JobController::class, 'index'])->name('index_company_jobs');
+    Route::post('create', [JobController::class, 'create'])->name('create_job');
+    Route::post('delete', [JobController::class, 'delete'])->name('delete_job');
 });
 
 Route::group(['prefix' => 'candidate', 'middleware' => ['auth:sanctum', 'verified', 'is.candidate']], function(){
     Route::get('dashboard', [HomeController::class, 'candidate'])->name('candidate_dashboard');
+    Route::get('index', [JobController::class, 'index'])->name('index_jobs');
 });
 
