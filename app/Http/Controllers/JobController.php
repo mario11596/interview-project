@@ -10,12 +10,14 @@ use Illuminate\Support\Facades\Auth;
 class JobController extends Controller
 {
     public function index(Request $request) {
-        if ($request->has('company_id')) {
-            $return = Job::where('company_id', $request->input('company_id'))->paginate($request->input('count', 10));
+        if (Auth::user()->is_company) {
+            $id = Company::where('email_id', Auth::user()->email)->value('id');
+            $jobs = Job::where('company_id', $id)->paginate($request->input('count', 10));
+            return view('company_dashboard', compact('jobs'));
         } else {
-            $return = Job::paginate($request->input('count', 10));
+            $jobs = Job::paginate($request->input('count', 10));
+            return view('candidate_dashboard', compact('jobs'));
         }
-        return view('', compact('return'));
     }
 
     public function store(Request $request) {
