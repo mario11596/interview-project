@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\JobController;
 use App\Http\Controllers\InformationController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,14 +25,19 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [HomeControll
 
 Route::group(['prefix' => 'company','as' => 'company.', 'middleware' => ['auth:sanctum', 'verified', 'is.company']], function(){
     Route::get('dashboard', [HomeController::class, 'company'])->name('company_dashboard');
-    Route::get('information', [InformationController::class, 'index'])->name('index');
-    Route::get('information/{id}/edit', [InformationController::class, 'editCompany'])->name('edit');
-    Route::post('information/{id}', [InformationController::class, 'updateCompany'])->name('update');
+    Route::get('index', [JobController::class, 'index'])->name('index_jobs');
+    Route::get('create', [JobController::class, 'create'])->name('create_job');
+    Route::post('store', [JobController::class, 'store'])->name('store_job');
+    Route::get('delete/{id}', [JobController::class, 'delete'])->name('delete_job');
+    Route::get('information', [InformationController::class, 'index'])->name('index_information');
+    Route::get('information/{id}/edit', [InformationController::class, 'editCompany'])->name('edit_information');
+    Route::post('information/{id}', [InformationController::class, 'updateCompany'])->name('update_information');
 });
 
 Route::group(['prefix' => 'candidate','as' => 'candidate.', 'middleware' => ['auth:sanctum', 'verified', 'is.candidate']], function(){
     Route::get('dashboard', [HomeController::class, 'candidate'])->name('candidate_dashboard');
-    Route::get('information', [InformationController::class, 'index'])->name('index');
-    Route::get('information/{id}/edit', [InformationController::class, 'editCandidate'])->name('edit');
-    Route::post('information/{id}', [InformationController::class, 'updateCandidate'])->name('update');
+    Route::get('index', [JobController::class, 'index'])->name('index_jobs');
+    Route::get('information', [InformationController::class, 'index'])->name('index_information');
+    Route::get('information/{id}/edit', [InformationController::class, 'editCandidate'])->name('edit_information');
+    Route::post('information/{id}', [InformationController::class, 'updateCandidate'])->name('update_information');
 });
