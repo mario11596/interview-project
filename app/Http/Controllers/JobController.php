@@ -18,20 +18,25 @@ class JobController extends Controller
         return view('', compact('return'));
     }
 
-    public function create(Request $request) {
-        $id = Company::where('email_id', $request->user()->email)->value('id');
+    public function store(Request $request) {
+        $id = Company::where('email_id', Auth::user()->email)->value('id');
         Job::create(['company_id' => $id] + $request->all());
+        return redirect('dashboard');
     }
 
-    public function delete(Request $request) {
+    public function create() {
+        return view('');
+    }
+
+    public function delete($id) {
         if (Auth::user()->is_company) {
-            $company = Company::where('email_id', $request->user()->email)->value('id');
-            $job = Job::where('id', $request->input('job_id'))->value('company_id');
+            $company = Company::where('email_id', Auth::user()->email)->value('id');
+            $job = Job::where('id', $id)->value('company_id');
             if ($company != $job) {
                 abort(403);
             }
         }
-        Job::where('id', $request->input('job_id'))->delete();
+        Job::where('id', $id)->delete();
     }
 
 }
