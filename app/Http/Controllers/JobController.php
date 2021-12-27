@@ -11,10 +11,11 @@ class JobController extends Controller
 {
     public function index(Request $request) {
         if ($request->has('company_id')) {
-            return Job::where('company_id', $request->input('company_id'))->paginate($request->input('count', 10));
+            $return = Job::where('company_id', $request->input('company_id'))->paginate($request->input('count', 10));
+        } else {
+            $return = Job::paginate($request->input('count', 10));
         }
-
-        return Job::paginate($request->input('count', 10));
+        return view('', compact('return'));
     }
 
     public function create(Request $request) {
