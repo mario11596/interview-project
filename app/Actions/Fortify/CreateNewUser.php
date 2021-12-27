@@ -17,7 +17,7 @@ class CreateNewUser implements CreatesNewUsers
     /**
      * Validate and create a newly registered user.
      *
-     * @param  array  $input
+     * @param array $input
      * @return \App\Models\User
      */
     public function create(array $input)
@@ -29,15 +29,14 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
         ])->validate();
 
-        if(isset($input['is_company'])){
-
+        if ($input['accountType'] == 'company') {
             $user = new User();
             $user->email = $input['email'];
             $user->is_company = true;
             $user->password = Hash::make($input['password']);
             $user->save();
-            
-            $company= new Company();
+
+            $company = new Company();
             $company->email_id = $input['email'];
             $company->name = $input['name'];
             $company->address = $input['addressCompany'];
@@ -45,10 +44,8 @@ class CreateNewUser implements CreatesNewUsers
             $company->number_employees = $input['number_employees'];
             $company->type = $input['type'];
             $company->save();
-          
-
-        } 
-        if(isset($input['is_candidate'])){
+        }
+        if ($input['accountType'] == 'candidate') {
             $user = new User();
             $user->email = $input['email'];
             $user->is_company = false;
@@ -65,7 +62,8 @@ class CreateNewUser implements CreatesNewUsers
             $candidate->OIB = $input['OIB'];
             $candidate->email_id = $input['email'];
             $candidate->save();
-        }   
+        }
+
         return $user;
         /*return User::create([
             'name' => $input['name'],
