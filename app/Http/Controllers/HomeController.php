@@ -8,9 +8,9 @@ class HomeController extends Controller
 {
     public function index() {
         if (Auth::user()->is_company) {
-            return $this->company();
+            return redirect('company/dashboard');
         } else {
-            return $this->candidate();
+            return redirect('candidate/dashboard');
         }
     }
 
