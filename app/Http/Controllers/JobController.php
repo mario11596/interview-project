@@ -27,7 +27,7 @@ class JobController extends Controller
     }
 
     public function create() {
-        return view('');
+        return view('company.job-create');
     }
 
     public function delete($id) {
@@ -39,6 +39,7 @@ class JobController extends Controller
             }
         }
         Job::where('id', $id)->delete();
+        return redirect('dashboard');
     }
 
 }

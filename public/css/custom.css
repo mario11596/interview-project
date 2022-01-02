@@ -1,0 +1,17 @@
+
+.hover\:bg-blue-details:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgba(104, 117, 245, 80%);
+}
+
+.hover\:bg-red-delete:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgba(239, 68, 68, 80%);
+}
+
+.hover\:bg-green-new:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgba(48, 161, 37, 80%);
+}
+
+
