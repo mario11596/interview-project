@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Candidate;
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,13 +12,14 @@ class InformationController extends Controller
 {
     public function index(){  
 
-        $role = Auth::user()->is_company;
-        $id = auth()->user->email;
+        $userCheck= User::findOrFail(Auth::id());
+        $role =  $userCheck->is_company;
+    
        
-        if($role){
-            $user = Company::where('email_id', $id);
+        if($role == true){
+            $user = Company::where("email_id","=",$userCheck->email)->get()->first();
         } else {
-            $user = Candidate::where('email_id', $id);
+            $user = Candidate::where("email_id","=",$userCheck->email)->get()->first();
         }
         return view('nekiPage', compact('user'));
     }
