@@ -55,14 +55,14 @@ class InterviewController extends Controller
     }
 
     //Nemam pojma što ovdje radim
-    public function getTimes(Request $request) {
-        $company = Job::find($request->input('job_id'))->value('company_id');
+    public function getTimes($job_id, $date) {
+        $company = Job::find($job_id)->value('company_id');
         $jobs = Job::where('company_id', $company)->pluck('id');
         $taken_times = array();
 
         foreach ($jobs as $job) {
             $job_times = Interview::where('job_id', $job)
-                                    ->where('date', $request->input('date'))
+                                    ->where('date', $date)
                                     ->pluck('time');
             $int_times = array();
             //Ovaj dio je jako ružan i jako mi se ne dopada
