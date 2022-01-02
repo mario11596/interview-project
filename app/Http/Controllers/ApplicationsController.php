@@ -16,15 +16,15 @@ use Illuminate\Support\Facades\Mail;
 class ApplicationsController extends Controller
 {
 
-    public function indexCandidate(){  
+    public function indexCandidate(){
         $all_jobs = DB::table('job_applications')
                         ->where('user_id', Auth::id())
                         ->join('jobs', 'job_applications.job_id', '=' ,'jobs.id')
                         ->join('companies','companies.id','=', 'jobs.company_id')
                         ->get();
-      
-       
-        return view('', compact('all_jobs '));
+
+
+        return view('', compact('all_jobs'));
     }
 
 
@@ -38,18 +38,18 @@ class ApplicationsController extends Controller
                         ->where('jobs.company_id',$user->id)
                         ->get();
         $all_jobs->groupBy('user_id');
-        
+
         return view('', compact('all_jobs'));
     }
 
     public function jobsClose($id){
-     
+
         $application = JobApplication::where('id',$id)->firstOrFail();
         $application->status = "Odobreno";
         $application->save();
 
-        
-        return redirect('applications');  
+
+        return redirect('applications');
     }
 
     public function jobsOpen($id){
@@ -57,7 +57,7 @@ class ApplicationsController extends Controller
         $application->status = "Cekanje";
         $application->save();
 
-        return redirect('applications'); 
+        return redirect('applications');
     }
 
     public function deleteCandidate($id){
@@ -69,7 +69,7 @@ class ApplicationsController extends Controller
     public function email(){
         $userCheck= User::findOrFail(Auth::id());
         $role =  $userCheck->is_company;
-        
+
         if($role){
             return view('email.emailTemplate');
         } else {
@@ -89,7 +89,7 @@ class ApplicationsController extends Controller
             $userTo = Company::findOrFail($id);
         }
        $userTo_email = $userTo->email_id;
-      
+
        Mail::to($userTo_email)->send(new MailContact($request));
        return redirect('applications/email');
        //return response()->json(['message' => 'Request completed']);
