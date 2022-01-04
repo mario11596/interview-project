@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewApplicationEvent;
 use App\Mail\MailContact;
 use App\Models\Candidate;
 use App\Models\Company;
@@ -66,7 +67,10 @@ class ApplicationsController extends Controller
 
     public function store(Request $request) {
         $id = Candidate::where('email_id', Auth::user()->email)->value('id');
-        JobApplication::create(['user_id' => $id] + $request->all());
+        $jobApplicaton = JobApplication::create(['user_id' => $id] + $request->all());
+
+        event(new NewApplicationEvent($jobApplicaton));
+
         return redirect('dashboard');
     }
 

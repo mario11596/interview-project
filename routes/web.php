@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InterviewController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\InformationController;
+use App\Http\Controllers\NotificationsController;
 use App\Models\JobApplication;
 use Illuminate\Support\Facades\Route;
 
@@ -44,6 +45,10 @@ Route::group(['prefix' => 'company','as' => 'company.', 'middleware' => ['auth:s
     Route::get('applications/{applications}/open', [ApplicationsController::class, 'jobsOpen'])->name('jobsOpen');
     Route::get('applications/email', [ApplicationsController::class, 'email'])->name('email_applications');
     Route::post('applications/email/{id}/send', [ApplicationsController::class, 'sendEmail'])->name('email_send_applications');
+
+    Route::get('notifications', [NotificationsController::class, 'notificationIndex'])->name('notifications.notificationIndex');
+    Route::get('notifications/mark', [NotificationsController::class, 'notificationMark'])->name('notifications.notificationMark');
+    Route::get('notifications/{id}', [NotificationsController::class, 'notificationMarkOne'])->name('notifications.notificationMarkOne');
 });
 
 Route::group(['prefix' => 'candidate','as' => 'candidate.', 'middleware' => ['auth:sanctum', 'verified', 'is.candidate']], function(){
