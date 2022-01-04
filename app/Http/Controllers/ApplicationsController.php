@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Mail\MailContact;
 use App\Models\Candidate;
 use App\Models\Company;
-use App\Models\Job;
 use App\Models\JobApplication;
 use App\Models\User;
+use App\Services\InterviewService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,8 +15,12 @@ use Illuminate\Support\Facades\Mail;
 
 class ApplicationsController extends Controller
 {
+    protected $interviewService;
 
-    public function indexCandidate(){
+    public function __construct(InterviewService $interviewService) {
+        $this->interviewService = $interviewService;
+    }
+    public function indexCandidate() {
         $all_jobs = DB::table('job_applications')
                         ->where('user_id', Auth::id())
                         ->join('jobs', 'job_applications.job_id', '=' ,'jobs.id')
@@ -28,7 +32,7 @@ class ApplicationsController extends Controller
     }
 
 
-    public function indexCompany(){
+    public function indexCompany() {
         $userCheck= User::findOrFail(Auth::id());
         $user = Company::where("email_id","=",$userCheck->email)->get()->first();
 
@@ -42,7 +46,7 @@ class ApplicationsController extends Controller
         return view('', compact('all_jobs'));
     }
 
-    public function jobsClose($id){
+    public function jobsClose($id) {
 
         $application = JobApplication::where('id',$id)->firstOrFail();
         $application->status = "Odobreno";
@@ -52,7 +56,7 @@ class ApplicationsController extends Controller
         return redirect('applications');
     }
 
-    public function jobsOpen($id){
+    public function jobsOpen($id) {
         $application = JobApplication::where('id',$id)->firstOrFail();
         $application->status = "Cekanje";
         $application->save();
@@ -60,7 +64,20 @@ class ApplicationsController extends Controller
         return redirect('applications');
     }
 
-    public function deleteCandidate($id){
+    public function store(Request $request) {
+        $id = Candidate::where('email_id', Auth::user()->email)->value('id');
+        JobApplication::create(['user_id' => $id] + $request->all());
+        return redirect('dashboard');
+    }
+
+    public function create(Request $request) {
+        //return view('');
+        $job_id = $request->input('job_id');
+        $times = $this->interviewService->getTimes($job_id);
+        return view('', compact($times));
+    }
+
+    public function deleteCandidate($id) {
         JobApplication::where('user_id', Auth::id())->where('id',$id)->delete();
 
         return redirect('applications');
@@ -77,7 +94,7 @@ class ApplicationsController extends Controller
         }
     }
 
-    public function sendEmail(Request $request, $id){
+    public function sendEmail(Request $request, $id) {
 
         $request->validate([
             'title' => 'required',

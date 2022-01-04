@@ -53,30 +53,4 @@ class InterviewController extends Controller
         }
         Interview::where('id', $id)->delete();
     }
-
-    //Nemam pojma što ovdje radim
-    public function getTimes($job_id, $date) {
-        $company = Job::find($job_id)->value('company_id');
-        $jobs = Job::where('company_id', $company)->pluck('id');
-        $taken_times = array();
-
-        foreach ($jobs as $job) {
-            $job_times = Interview::where('job_id', $job)
-                                    ->where('date', $date)
-                                    ->pluck('time');
-            $int_times = array();
-            //Ovaj dio je jako ružan i jako mi se ne dopada
-            foreach ($job_times->toArray() as $time_str) {
-                $time = strtotime($time_str);
-                $int_times[] = intval(date('h.i', $time));
-            }
-            $taken_times = array_merge($taken_times, $int_times);
-        }
-
-        $available_times = range(8, 18); //ajmo ovo trpati u bazu
-        $free_times = array_diff($available_times, $taken_times);
-
-        return array_values($free_times);
-    }
-
 }
