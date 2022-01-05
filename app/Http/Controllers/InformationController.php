@@ -10,67 +10,75 @@ use Illuminate\Support\Facades\Auth;
 
 class InformationController extends Controller
 {
-    public function index(){  
+    public function index()
+    {
 
-        $userCheck= User::findOrFail(Auth::id());
-        $role =  $userCheck->is_company;
-    
-       
-        if($role == true){
-            $user = Company::where("email_id","=",$userCheck->email)->get()->first();
+        $userCheck = User::findOrFail(Auth::id());
+        $role = $userCheck->is_company;
+
+
+        if ($role == true) {
+            $user = Company::where("email_id", "=", $userCheck->email)->get()->first();
+            return view('company.information', compact('user'));
         } else {
-            $user = Candidate::where("email_id","=",$userCheck->email)->get()->first();
+            $user = Candidate::where("email_id", "=", $userCheck->email)->get()->first();
+            return view('candidate.information', compact('user'));
         }
-        return view('nekiPage', compact('user'));
-    }
-
-    
-    public function editCompany(Company $company){
-    
-        if($company->email_id != auth()->user->email){
-            return redirect('/information');
-        }
-        return view('', compact('company'));
     }
 
 
-    public function updateCompany(Request $request,$id){ 
+    public function editCompany($id){
 
-        $company = Company::where("id","=",$id)->get()->first();
+        $company = Company::where("id", "=", $id)->get()->first();
+
+        if ($company->email_id != Auth::user()->email) {
+            return redirect('/company/information');
+        }
+        return view('company.information-edit', compact('company'));
+    }
+
+
+    public function updateCompany(Request $request, $id)
+    {
+
+        $company = Company::where("id", "=", $id)->get()->first();
 
         $request->validate([
             'name' => 'required',
             'address' => 'required',
             'city' => 'required',
-            'number_employess' => 'required',
+            'number_employees' => 'required',
             'type' => 'required',
         ]);
-      
-        $company->name = request('name');
-        $company->address = request('address');
-        $company->city = request('city');
-        $company->number_employess = request('number_employess');
-        $company->type = request('type');
-        $company->email_id = auth()->user->email;
+
+        $company->name = $request['name'];
+        $company->address = $request['address'];
+        $company->city = $request['city'];
+        $company->number_employees = $request['number_employees'];
+        $company->type = $request['type'];
+        $company->email_id = Auth::user()->email;
 
         $company->save();
 
-        return redirect('/information')->with('info', 'Uspješno su ažurirani podaci');
+        return redirect('/company/information')->with('info', 'Uspješno su ažurirani podaci');
     }
 
 
-    public function editCandidate(Candidate $candidate){
-    
-        if($candidate->email_id != auth()->user->email){
-            return redirect('/information');
+    public function editCandidate($id)
+    {
+        $candidate = Candidate::where("id", "=", $id)->get()->first();
+
+        if ($candidate->email_id != Auth::user()->email) {
+            return redirect('/candidate/information');
         }
-        return view('', compact('candidate'));
+        return view('candidate.information-edit', compact('candidate'));
     }
 
 
-    public function updateCandidate(Request $request,$id){ 
+    public function updateCandidate(Request $request, $id)
+    {
 
-        $candidate = Candidate::where("id","=",$id)->get()->first();
+        $candidate = Candidate::where("id", "=", $id)->get()->first();
 
         $request->validate([
             'name' => 'required',
@@ -81,19 +89,19 @@ class InformationController extends Controller
             'status' => 'required',
             'OIB' => 'required'
         ]);
-      
-        $candidate->name = request('name');
-        $candidate->surname = request('surname');
-        $candidate->address = request('address');
-        $candidate->city = request('city');
-        $candidate->mobile_number = request('mobile_number');
-        $candidate->status = request('status');
-        $candidate->OIB = request('OIB');
-        $candidate->email_id = auth()->user->email;
+
+        $candidate->name = $request['name'];
+        $candidate->surname = $request['surname'];
+        $candidate->address = $request['address'];
+        $candidate->city = $request['city'];
+        $candidate->mobile_number = $request['mobile_number'];
+        $candidate->status = $request['status'];
+        $candidate->OIB = $request['OIB'];
+        $candidate->email_id = Auth::user()->email;
 
         $candidate->save();
 
-        return redirect('/information')->with('info', 'Uspješno su ažurirani podaci');
+        return redirect('/candidate/information')->with('info', 'Uspješno su ažurirani podaci');
     }
 
 }
