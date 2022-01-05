@@ -3,20 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NotificationsController extends Controller
 {
     public function notificationIndex(){
 
         $notifications = auth()->user()->unreadNotifications;
+        
+        if (Auth::user()->is_company) {
+            return view('notifications.indexCompany', compact('notifications'));
+        } else {
+            return view('notifications.indexCandidate', compact('notifications'));
+        }
 
-        return view('notifications.index', compact('notifications'));
     }
 
     public function notificationMark(){
 
         auth()->user()->unreadNotifications->markAsRead();
-        return redirect('/notifications');
+        return redirect('notifications');
     }
     
     public function notificationMarkOne($id){
@@ -28,7 +34,7 @@ class NotificationsController extends Controller
         if($notification){
             $notification->markAsRead();
 
-            return redirect('/notifications');
+            return redirect('notifications');
         }
     }  
 }

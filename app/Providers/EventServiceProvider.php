@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\AcceptionEvent;
 use App\Events\NewApplicationEvent;
+use App\Listeners\AcceptionListener;
 use App\Listeners\NewApplicationListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -21,6 +23,13 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
 
+        NewApplicationEvent::class => [
+            NewApplicationListener::class,
+        ],
+
+        AcceptionEvent::class => [
+            AcceptionListener::class,
+        ],
         
     ];
 

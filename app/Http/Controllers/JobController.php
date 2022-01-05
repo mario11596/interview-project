@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Job;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,4 +43,29 @@ class JobController extends Controller
         return redirect('dashboard');
     }
 
+    public function search(Request $request){
+        $search = $request->input('search') ?: "";
+
+        $jobs = Job::query()
+        ->where('user_id', Auth::id())
+        ->where(function(Builder $builder) use ($search){
+            $builder->where('position', 'LIKE', "%{$search}%");
+        })
+        ->orderBy('id')
+        ->get();
+        
+        if(count($jobs) > 0){
+            if(Auth::user()->is_company){
+                return view('company_dashboard', compact('jobs','search'));
+            } else {
+                return view('candidate_dashboard', compact('jobs','search'));
+            }
+        } else {
+            if(Auth::user()->is_company){
+                return redirect('company_dashboard')->with('warning', 'Nema tražene pozicije!');
+            } else {
+                return redirect('candidate_dashboard')->with('warning', 'Nema tražene pozicije!');
+            }
+        }
+    }
 }

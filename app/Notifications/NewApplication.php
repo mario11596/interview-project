@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Candidate;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -10,16 +11,16 @@ use Illuminate\Notifications\Notification;
 class NewApplication extends Notification
 {
     use Queueable;
-    public $user;
+    public $jobApplicaton;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($jobApplicaton)
     {
-        $this->user = $user;
+        $this->jobApplicaton = $jobApplicaton;
     }
 
     /**
@@ -46,19 +47,35 @@ class NewApplication extends Notification
                     ->action('Notification Action', url('/'))
                     ->line('Thank you for using our application!');
     }*/
-
     /**
      * Get the array representation of the notification.
      *
      * @param  mixed  $notifiable
      * @return array
      */
+    public function toDatabase($notifiable)
+    {
+        return [
+            
+            'name' => $this->jobApplication->name,
+            'surname' => $this->jobApplication->surname,
+            'city' => $this->jobApplication->city,
+        ];
+    }
+   
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
+    
     public function toArray($notifiable)
     {
         return [
-            'name' =>$this->user->name,
-            'surname' => $this->user->surname,
-            'city' => $this->user->city,
+            'name' => $this->jobApplication->name,
+            'surname' => $this->jobApplication->surname,
+            'city' => $this->jobApplication->city,
         ];
     }
 }

@@ -10,20 +10,23 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use App\Listeners\AcceptionListener;
 
-class NewApplicationEvent
+
+class AcceptionEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
-    public $jobApplicaton;
+    public $application;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(JobApplication $jobApplicaton)
+    public function __construct(JobApplication $application)
     {
-        $this->jobApplicaton = $jobApplicaton;
+      
+        $this->application = $application;
+       
     }
 
     /**
@@ -36,3 +39,5 @@ class NewApplicationEvent
         return new PrivateChannel('channel-name');
     }
 }
+
+
