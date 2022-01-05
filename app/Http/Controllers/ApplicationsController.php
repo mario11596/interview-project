@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\AcceptionEvent;
+use App\Events\NewApplicationEvent;
 use App\Mail\MailContact;
 use App\Models\Candidate;
 use App\Models\Company;
 use App\Models\JobApplication;
 use App\Models\User;
+use App\Notifications\Acception;
 use App\Services\InterviewService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,6 +55,9 @@ class ApplicationsController extends Controller
         $application->status = "Odobreno";
         $application->save();
 
+        
+        event(new AcceptionEvent($application));
+        //$application->notify(new Acception($application));
 
         return redirect('applications');
     }
@@ -61,12 +67,16 @@ class ApplicationsController extends Controller
         $application->status = "Cekanje";
         $application->save();
 
+
         return redirect('applications');
     }
 
     public function store(Request $request) {
         $id = Candidate::where('email_id', Auth::user()->email)->value('id');
-        JobApplication::create(['user_id' => $id] + $request->all());
+        $jobApplicaton = JobApplication::create(['user_id' => $id] + $request->all());
+
+        event(new NewApplicationEvent($jobApplicaton));
+
         return redirect('dashboard');
     }
 
