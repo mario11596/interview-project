@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class InformationController extends Controller
 {
@@ -86,16 +87,24 @@ class InformationController extends Controller
             'address' => 'required',
             'city' => 'required',
             'mobile_number' => 'required',
-            'status' => 'required',
-            'OIB' => 'required'
+            'status_type' => 'required',
+            'OIB' => 'required', 
+            "file" => "required_without_all:name,surname,address,city,mobile_number,status_type,OIB|mimes:pdf|max:10000"
         ]);
+        if($request->file('file')){
+            $file = $request->file('file');
+            $fileName = Auth::user()->email.'.'.$file->getClientOriginalExtension(); 
+            $filePath = public_path() . '/files/uploads/';
+            $file->move($filePath, $fileName);
+            
+        }
 
         $candidate->name = $request['name'];
         $candidate->surname = $request['surname'];
         $candidate->address = $request['address'];
         $candidate->city = $request['city'];
         $candidate->mobile_number = $request['mobile_number'];
-        $candidate->status = $request['status'];
+        $candidate->status_type = $request['status_type'];
         $candidate->OIB = $request['OIB'];
         $candidate->email_id = Auth::user()->email;
 
@@ -104,4 +113,28 @@ class InformationController extends Controller
         return redirect('/candidate/information')->with('info', 'Uspješno su ažurirani podaci');
     }
 
+
+    public function destroyPDF($id) {
+        $pathToFile = public_path().'/files/uploads/'.$id.'.pdf';
+        
+    
+        if (File::exists($pathToFile)) {
+            File::delete(public_path('/files/uploads/'.$id.'.pdf'));
+        }
+        
+        return redirect('/candidate/information');
+    }
+
+
+    public function showPDF($id){
+        $pathToFile = public_path().'/files/uploads/'.$id.'.pdf';
+
+        if (file_exists($pathToFile)) {
+
+        $headers = [
+            'Content-Type' => 'application/pdf'
+        ];
+            return response()->file($pathToFile);
+        }
+    }
 }

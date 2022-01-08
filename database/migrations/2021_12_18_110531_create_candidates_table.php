@@ -21,7 +21,7 @@ class CreateCandidatesTable extends Migration
             $table->string('address');
             $table->string('city');
             $table->string('mobile_number');
-            $table->string('status');
+            $table->string('status_type');
             $table->string('OIB')->unique();
             $table->timestamps();
 

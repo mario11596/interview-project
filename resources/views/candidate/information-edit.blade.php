@@ -8,7 +8,7 @@
     <div class="py-5">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex items-center justify-center">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg m-5 w-1/2 p-6 space-y-4">
-                <form method="POST" action="{{route('candidate.update_information', $candidate->id)}}">
+                <form method="POST" action="{{route('candidate.update_information', $candidate->id)}}" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="mb-4">
                         <x-jet-label for="name" value="Ime"/>
@@ -47,11 +47,16 @@
                                      required/>
                     </div>
                     <div class="mb-4">
-                        <x-jet-label for="status" value="Status"/>
-                        <x-jet-input id="status" class="block mt-1 w-full bg-gray-100" type="text" name="status"
-                                     value="{{$candidate->status}}"
+                        <x-jet-label for="status_type" value="Trenutni status"/>
+                        <x-jet-input id="status_type" class="block mt-1 w-full bg-gray-100" type="text" name="status_type"
+                                     value="{{$candidate->status_type}}"
                                      required/>
                     </div>
+                    <div class="mb-4">
+                        <x-jet-label for="file" value="Životopis (.pdf format)"/>
+                        <x-jet-input id="file" class="block mt-1 w-full bg-gray-100" type="file" name="file" />            
+                    </div>
+                   
                     <div class="flex justify-center">
                         <x-jet-button type="submit" class="hover:bg-green-new"> SPREMI</x-jet-button>
                     </div>
