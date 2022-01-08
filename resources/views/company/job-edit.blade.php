@@ -41,7 +41,7 @@
                     </div>
                     <div class="mb-4">
                         <x-jet-label for="deadline" value="Rok trajanja oglasa"/>
-                        <x-jet-input id="type" class="block mt-1 w-full bg-gray-100" type="date" name="type"
+                        <x-jet-input id="deadline" class="block mt-1 w-full bg-gray-100" type="date" name="deadline"
                                      value="{{$job->deadline}}"
                                      required/>
                     </div>

@@ -56,6 +56,7 @@ class JobController extends Controller
     public function update(Request $request, $id) {
 
         $job = Job::findOrFail($id);
+        $company = $job->company_id;
 
         $request->validate([
             'description' => 'required',
@@ -71,6 +72,8 @@ class JobController extends Controller
         $job->type = $request['type'];
         $job->city = $request['city'];
         $job->salary = $request['salary'];
+        $job->deadline = $request['deadline'];
+        $job->company_id = $company;
 
         $job->save();
 
