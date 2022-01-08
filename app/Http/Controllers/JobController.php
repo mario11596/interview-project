@@ -43,29 +43,40 @@ class JobController extends Controller
         return redirect('dashboard');
     }
 
-    public function search(Request $request){
+
+    public function searchCandidate(Request $request){
         $search = $request->input('search') ?: "";
 
         $jobs = Job::query()
-        ->where('user_id', Auth::id())
-        ->where(function(Builder $builder) use ($search){
-            $builder->where('position', 'LIKE', "%{$search}%");
-        })
-        ->orderBy('job_id')
-        ->get();
+            ->where(function(Builder $builder) use ($search){
+                $builder->where('position', 'LIKE', "%{$search}%");
+            })
+            ->orderBy('job_id')
+            ->get();
 
         if(count($jobs) > 0){
-            if(Auth::user()->is_company){
-                return view('company_dashboard', compact('jobs','search'));
-            } else {
-                return view('candidate_dashboard', compact('jobs','search'));
-            }
+            return view('candidate_dashboard', compact('jobs','search'));
         } else {
-            if(Auth::user()->is_company){
-                return redirect('company_dashboard')->with('warning', 'Nema tražene pozicije!');
-            } else {
-                return redirect('candidate_dashboard')->with('warning', 'Nema tražene pozicije!');
-            }
+            return redirect('candidate_dashboard')->with('warning', 'Nema tražene pozicije!');
+        }
+    }
+
+    public function searchCompany(Request $request){
+        $search = $request->input('search') ?: "";
+        $company = Company::where('email_id', Auth::user()->email)->value('company_id');
+
+        $jobs = Job::query()
+            ->where('company_id', $company)
+            ->where(function(Builder $builder) use ($search){
+                $builder->where('position', 'LIKE', "%{$search}%");
+            })
+            ->orderBy('job_id')
+            ->get();
+
+        if(count($jobs) > 0){
+            return view('company_dashboard', compact('jobs','search'));
+        } else {
+            return redirect('company_dashboard')->with('warning', 'Nema tražene pozicije!');
         }
     }
 }
