@@ -47,7 +47,7 @@
 
                     <div class="mt-4 flex items-center justify-end">
                         <div class="w-auto h-5">
-                            <a href="{{ route('company.edit_information', $user->id)}}">
+                            <a href="{{ route('company.edit_information', $user->company_id)}}">
                             <x-jet-button class="hover:bg-blue-details w-auto"> UREDI PODATKE </x-jet-button>
                             </a>
                         </div>

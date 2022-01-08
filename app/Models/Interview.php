@@ -9,6 +9,8 @@ class Interview extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'interview_id';
+
     protected $fillable = [
         'user_id',
         'job_id',

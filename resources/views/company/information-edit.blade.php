@@ -8,7 +8,7 @@
     <div class="py-5">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex items-center justify-center">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg m-5 w-1/2 p-6 space-y-4">
-                <form method="POST" action="{{route('company.update_information', [$company->id])}}">
+                <form method="POST" action="{{route('company.update_information', [$company->company_id])}}">
                     {{ csrf_field() }}
                     <div class="mb-4">
                         <x-jet-label for="name" value="Naziv"/>

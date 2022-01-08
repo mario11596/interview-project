@@ -13,8 +13,8 @@ class InterviewController extends Controller
 {
     public function index(Request $request) {
         if (Auth::user()->is_company) {
-            $id = Company::where('email_id', Auth::user()->email)->value('id');
-            $jobs = Job::where('company_id', $id)->pluck('id');
+            $id = Company::where('email_id', Auth::user()->email)->value('company_id');
+            $jobs = Job::where('company_id', $id)->pluck('job_id');
             $interviews = array();
 
             foreach ($jobs as $job) {
@@ -26,7 +26,7 @@ class InterviewController extends Controller
             }
             return view('', compact('interviews'));
         } else {
-            $id = Candidate::where('email_id', Auth::user()->email)->value('id');
+            $id = Candidate::where('email_id', Auth::user()->email)->value('candidate_id');
             $interviews = Interview::where('user_id', $id)
                                     ->orderBy('date', 'asc')
                                     ->orderBy('time', 'asc')
@@ -37,7 +37,7 @@ class InterviewController extends Controller
     }
 
     public function store(Request $request) {
-        $id = Candidate::where('email_id', Auth::user()->email)->value('id');
+        $id = Candidate::where('email_id', Auth::user()->email)->value('candidate_id');
         Interview::create(['user_id' => $id] + $request->all());
     }
 
@@ -46,11 +46,11 @@ class InterviewController extends Controller
     }
 
     public function delete($id) {
-        $user = Candidate::where('email_id', Auth::user()->email)->value('id');
+        $user = Candidate::where('email_id', Auth::user()->email)->value('candidate_id');
         $interview = Interview::find($id)->value('user_id');
         if ($user != $interview) {
             abort(403);
         }
-        Interview::where('id', $id)->delete();
+        Interview::where('interview_id', $id)->delete();
     }
 }

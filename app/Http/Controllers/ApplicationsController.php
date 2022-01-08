@@ -26,8 +26,8 @@ class ApplicationsController extends Controller
     public function indexCandidate() {
         $all_jobs = DB::table('job_applications')
                         ->where('user_id', Auth::id())
-                        ->join('jobs', 'job_applications.job_id', '=' ,'jobs.id')
-                        ->join('companies','companies.id','=', 'jobs.company_id')
+                        ->join('jobs', 'job_applications.job_id', '=' ,'jobs.job_id')
+                        ->join('companies','companies.company_id','=', 'jobs.company_id')
                         ->get();
 
 
@@ -40,8 +40,8 @@ class ApplicationsController extends Controller
         $user = Company::where("email_id","=",$userCheck->email)->get()->first();
 
         $all_jobs = DB::table('job_applications')
-                        ->join('jobs', 'job_applications.job_id', '=' ,'jobs.id')
-                        ->join('candidates', 'job_applications.user_id', '=' ,'candidates.id')
+                        ->join('jobs', 'job_applications.job_id', '=' ,'jobs.job_id')
+                        ->join('candidates', 'job_applications.user_id', '=' ,'candidates.candidate_id')
                         ->where('jobs.company_id',$user->id)
                         ->get();
         $all_jobs->groupBy('user_id');
@@ -51,11 +51,11 @@ class ApplicationsController extends Controller
 
     public function jobsClose($id) {
 
-        $application = JobApplication::where('id',$id)->firstOrFail();
+        $application = JobApplication::where('application_id',$id)->firstOrFail();
         $application->status = "Odobreno";
         $application->save();
 
-        
+
         event(new AcceptionEvent($application));
         //$application->notify(new Acception($application));
 
@@ -63,7 +63,7 @@ class ApplicationsController extends Controller
     }
 
     public function jobsOpen($id) {
-        $application = JobApplication::where('id',$id)->firstOrFail();
+        $application = JobApplication::where('application_id',$id)->firstOrFail();
         $application->status = "Cekanje";
         $application->save();
 
@@ -72,7 +72,7 @@ class ApplicationsController extends Controller
     }
 
     public function store(Request $request) {
-        $id = Candidate::where('email_id', Auth::user()->email)->value('id');
+        $id = Candidate::where('email_id', Auth::user()->email)->value('candidate_id');
         $jobApplicaton = JobApplication::create(['user_id' => $id] + $request->all());
 
         event(new NewApplicationEvent($jobApplicaton));
@@ -88,7 +88,7 @@ class ApplicationsController extends Controller
     }
 
     public function deleteCandidate($id) {
-        JobApplication::where('user_id', Auth::id())->where('id',$id)->delete();
+        JobApplication::where('user_id', Auth::id())->where('application_id',$id)->delete();
 
         return redirect('applications');
     }

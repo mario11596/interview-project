@@ -28,7 +28,7 @@
                                     <a href="">
                                         <x-jet-button class="mr-3 hover:bg-blue-details">Detalji</x-jet-button>
                                     </a>
-                                    <a href="{{ route('company.delete_job', [$job->id]) }}"
+                                    <a href="{{ route('company.delete_job', [$job->job_id]) }}"
                                        onclick="return confirm('Are you sure?')">
                                         <x-jet-button class="mr-3 hover:bg-red-delete">Obriši</x-jet-button>
                                     </a>

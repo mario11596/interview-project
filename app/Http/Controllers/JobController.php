@@ -12,7 +12,7 @@ class JobController extends Controller
 {
     public function index(Request $request) {
         if (Auth::user()->is_company) {
-            $id = Company::where('email_id', Auth::user()->email)->value('id');
+            $id = Company::where('email_id', Auth::user()->email)->value('company_id');
             $jobs = Job::where('company_id', $id)->paginate($request->input('count', 10));
             return view('company_dashboard', compact('jobs'));
         } else {
@@ -22,7 +22,7 @@ class JobController extends Controller
     }
 
     public function store(Request $request) {
-        $id = Company::where('email_id', Auth::user()->email)->value('id');
+        $id = Company::where('email_id', Auth::user()->email)->value('company_id');
         Job::create(['company_id' => $id] + $request->all());
         return redirect('dashboard');
     }
@@ -33,13 +33,13 @@ class JobController extends Controller
 
     public function delete($id) {
         if (Auth::user()->is_company) {
-            $company = Company::where('email_id', Auth::user()->email)->value('id');
-            $job = Job::where('id', $id)->value('company_id');
+            $company = Company::where('email_id', Auth::user()->email)->value('company_id');
+            $job = Job::where('job_id', $id)->value('company_id');
             if ($company != $job) {
                 abort(403);
             }
         }
-        Job::where('id', $id)->delete();
+        Job::where('job_id', $id)->delete();
         return redirect('dashboard');
     }
 
@@ -51,9 +51,9 @@ class JobController extends Controller
         ->where(function(Builder $builder) use ($search){
             $builder->where('position', 'LIKE', "%{$search}%");
         })
-        ->orderBy('id')
+        ->orderBy('job_id')
         ->get();
-        
+
         if(count($jobs) > 0){
             if(Auth::user()->is_company){
                 return view('company_dashboard', compact('jobs','search'));

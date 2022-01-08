@@ -56,7 +56,7 @@
 
                     <div class="mt-4 flex items-center justify-end">
                         <div class="w-auto h-5">
-                            <a href="{{ route('candidate.edit_information', [$user->id])}}">
+                            <a href="{{ route('candidate.edit_information', [$user->candidate_id])}}">
                             <x-jet-button class="hover:bg-blue-details w-auto"> UREDI PODATKE </x-jet-button>
                             </a>
                         </div>

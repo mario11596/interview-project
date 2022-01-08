@@ -9,6 +9,8 @@ class JobApplication extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'application_id';
+
     protected $fillable = [
         'job_id',
         'user_id',

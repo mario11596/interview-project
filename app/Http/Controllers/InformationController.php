@@ -29,7 +29,7 @@ class InformationController extends Controller
 
     public function editCompany($id){
 
-        $company = Company::where("id", "=", $id)->get()->first();
+        $company = Company::where("company_id", "=", $id)->get()->first();
 
         if ($company->email_id != Auth::user()->email) {
             return redirect('/company/information');
@@ -41,7 +41,7 @@ class InformationController extends Controller
     public function updateCompany(Request $request, $id)
     {
 
-        $company = Company::where("id", "=", $id)->get()->first();
+        $company = Company::where("company_id", "=", $id)->get()->first();
 
         $request->validate([
             'name' => 'required',
@@ -66,7 +66,7 @@ class InformationController extends Controller
 
     public function editCandidate($id)
     {
-        $candidate = Candidate::where("id", "=", $id)->get()->first();
+        $candidate = Candidate::where("candidate_id", "=", $id)->get()->first();
 
         if ($candidate->email_id != Auth::user()->email) {
             return redirect('/candidate/information');
@@ -78,7 +78,7 @@ class InformationController extends Controller
     public function updateCandidate(Request $request, $id)
     {
 
-        $candidate = Candidate::where("id", "=", $id)->get()->first();
+        $candidate = Candidate::where("candidate_id", "=", $id)->get()->first();
 
         $request->validate([
             'name' => 'required',
