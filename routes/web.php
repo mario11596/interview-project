@@ -30,9 +30,12 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [HomeControll
 
 Route::group(['prefix' => 'company','as' => 'company.', 'middleware' => ['auth:sanctum', 'verified', 'is.company']], function(){
     Route::get('dashboard', [JobController::class, 'index'])->name('company_dashboard');
+    Route::get('dashboard/{id}', [JobController::class, 'details'])->name('job_details');
     Route::get('create', [JobController::class, 'create'])->name('create_job');
     Route::post('store', [JobController::class, 'store'])->name('store_job');
     Route::get('delete/{id}', [JobController::class, 'delete'])->name('delete_job');
+    Route::get('edit/{id}', [JobController::class, 'edit'])->name('edit_job');
+    Route::post('update/{id}', [JobController::class, 'update'])->name('update_job');
     Route::get('search', [JobController::class, 'search'])->name('search');
 
     Route::get('information', [InformationController::class, 'index'])->name('index_information');
@@ -54,6 +57,7 @@ Route::group(['prefix' => 'company','as' => 'company.', 'middleware' => ['auth:s
 
 Route::group(['prefix' => 'candidate','as' => 'candidate.', 'middleware' => ['auth:sanctum', 'verified', 'is.candidate']], function(){
     Route::get('dashboard', [JobController::class, 'index'])->name('candidate_dashboard');
+    Route::get('dashboard/{id}', [JobController::class, 'details'])->name('job_details');
     Route::get('search', [JobController::class, 'search'])->name('search');
 
     Route::get('information', [InformationController::class, 'index'])->name('index_information');

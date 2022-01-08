@@ -21,6 +21,16 @@ class JobController extends Controller
         }
     }
 
+    public function details($id) {
+        $job = Job::findOrFail($id);
+
+        if (Auth::user()->is_company) {
+            return view('company.job-details', compact('job'));
+        } else {
+            return view('candidate.job-details', compact('job'));
+        }
+    }
+
     public function store(Request $request) {
         $id = Company::where('email_id', Auth::user()->email)->value('company_id');
         Job::create(['company_id' => $id] + $request->all());
@@ -29,6 +39,42 @@ class JobController extends Controller
 
     public function create() {
         return view('company.job-create');
+    }
+
+    public function edit($id) {
+
+        $job = Job::find($id);
+        $company = Company::find($job->company_id)->value('email_id');
+
+        if ($company != Auth::user()->email) {
+            return redirect("/company/dashboard/{$id}");
+        }
+        return view('company.job-edit', compact('job'));
+    }
+
+
+    public function update(Request $request, $id) {
+
+        $job = Job::findOrFail($id);
+
+        $request->validate([
+            'description' => 'required',
+            'position' => 'required',
+            'type' => 'required',
+            'city' => 'required',
+            'salary' => 'required',
+            'deadline' => 'required'
+        ]);
+
+        $job->description = $request['description'];
+        $job->position = $request['position'];
+        $job->type = $request['type'];
+        $job->city = $request['city'];
+        $job->salary = $request['salary'];
+
+        $job->save();
+
+        return redirect("/company/dashboard/{$id}")->with('info', 'Uspješno su ažurirani podaci');
     }
 
     public function delete($id) {
