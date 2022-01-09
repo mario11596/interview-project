@@ -55,7 +55,7 @@
 
                     <div class="mt-4 flex items-center justify-end">
                         <div class="w-auto h-5">
-                            <a href="{{ route('candidate.edit_information', [$job->job_id])}}">
+                            <a href="{{ route('candidate.create_application', [$job->job_id])}}">
                             <x-jet-button class="hover:bg-blue-details w-auto"> PRIJAVI SE </x-jet-button>
                             </a>
                         </div>
