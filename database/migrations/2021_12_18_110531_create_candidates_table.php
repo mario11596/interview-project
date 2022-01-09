@@ -15,13 +15,13 @@ class CreateCandidatesTable extends Migration
     {
         Schema::create('candidates', function (Blueprint $table) {
             $table->id();
-            $table->string('email_id'); 
+            $table->string('email_id');
             $table->string('name');
             $table->string('surname');
             $table->string('address');
             $table->string('city');
             $table->string('mobile_number');
-            $table->string('status_type');
+            $table->string('status');
             $table->string('OIB')->unique();
             $table->timestamps();
 
@@ -30,7 +30,7 @@ class CreateCandidatesTable extends Migration
                 ->onDelete('cascade');
         });
     }
-   
+
     /**
      * Reverse the migrations.
      *
