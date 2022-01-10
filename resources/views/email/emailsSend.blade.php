@@ -1,6 +1,7 @@
 @component('mail::message')
 
-    <p>{{ $details['title'] }}</p>
+    <strong><p>{{ $details['title'] }}</p></strong>
     <p>{{ $details['content'] }}</p>
 
+    Lijep pozdrav
 @endcomponent

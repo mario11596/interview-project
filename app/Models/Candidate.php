@@ -18,7 +18,7 @@ class Candidate extends Model
        'address',
        'city',
        'mobile_number',
-       'status',
+       'status_type',
        'OIB'
     ];
 
