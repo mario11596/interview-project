@@ -34,7 +34,6 @@ class InterviewController extends Controller
                 ->where('date', '>=', date("Y-m-d"))
                 ->get();
 
-            dd($before, $after);
             return view('', compact(['before', 'after']));
         } else {
             $before = DB::table('interviews')
