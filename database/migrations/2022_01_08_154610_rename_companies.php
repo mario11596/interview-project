@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class RenameCompanies extends Migration
@@ -15,10 +14,8 @@ class RenameCompanies extends Migration
     public function up()
     {
         Schema::table('companies', function(Blueprint $table) {
-            //$table->renameColumn('id', 'company_id');
+            $table->renameColumn('id', 'company_id');
         });
-        DB::statement('ALTER TABLE `companies` CHANGE `id` `company_id` BIGINT(20) NOT NULL;');
-        
     }
 
     /**

@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class RenameJobApplications extends Migration
@@ -15,9 +14,8 @@ class RenameJobApplications extends Migration
     public function up()
     {
         Schema::table('job_applications', function(Blueprint $table) {
-            //$table->renameColumn('id', 'application_id');
+            $table->renameColumn('id', 'application_id');
         });
-        DB::statement('ALTER TABLE `job_applications` CHANGE `id` `application_id` BIGINT(20) NOT NULL;');
     }
 
     /**

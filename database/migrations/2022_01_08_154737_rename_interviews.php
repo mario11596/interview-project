@@ -2,10 +2,9 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class RenameJobs extends Migration
+class RenameInterviews extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +13,9 @@ class RenameJobs extends Migration
      */
     public function up()
     {
-        Schema::table('jobs', function(Blueprint $table) {
-            //$table->renameColumn('id', 'job_id');
+        Schema::table('interviews', function(Blueprint $table) {
+            $table->renameColumn('id', 'interview_id');
         });
-        DB::statement('ALTER TABLE `jobs` CHANGE `id` `job_id` BIGINT(20) NOT NULL;');
     }
 
     /**
@@ -27,8 +25,8 @@ class RenameJobs extends Migration
      */
     public function down()
     {
-        Schema::table('jobs', function(Blueprint $table) {
-            $table->renameColumn('job_id', 'id');
+        Schema::table('interviews', function(Blueprint $table) {
+            $table->renameColumn('interview_id', 'id');
         });
     }
 }

@@ -13,7 +13,9 @@ class RenameCandidateStatus extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('candidates', function(Blueprint $table) {
+            $table->renameColumn('status', 'status_type');
+        });
     }
 
     /**
@@ -23,6 +25,8 @@ class RenameCandidateStatus extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('candidates', function(Blueprint $table) {
+            $table->renameColumn('status_type', 'status');
+        });
     }
 }
