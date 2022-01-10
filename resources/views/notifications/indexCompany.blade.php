@@ -1,3 +1,5 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
 <x-app-layout>
     <x-slot name="header">
         <div class="input-group">
@@ -20,7 +22,7 @@
                             <div class="alert alert-success">
                                 {{ $notification->created_at->diffForhumans() }} </br>
                                 Prijava: Kandidat {{ $notification->data['name'] }} {{ $notification->data['surname'] }} iz {{ $notification->data['city'] }}, se uspješno prijavio na Vaš oglas!
-                                <a href="{{ route('company.notificationMarkOne', $notification->id) }}" class="float-right mark-as-read">Označi kao pročitano</a>   
+                                <a href="{{ route('company.notificationMarkOne', $notification->id) }}" class="flex justify-end">Označi kao pročitano</a>   
                             </div>
                         </div>
                     </div>

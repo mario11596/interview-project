@@ -118,8 +118,8 @@
                 </div>
 
                 <div class="mt-4">
-                    <x-jet-label for="status">Trenutni status:</x-jet-label>
-                    <x-jet-input id="status" class="block mt-1 w-full" type="text" name="status"/>
+                    <x-jet-label for="status_type">Trenutni status:</x-jet-label>
+                    <x-jet-input id="status_type" class="block mt-1 w-full" type="text" name="status_type"/>
                 </div>
             </div>
 

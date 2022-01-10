@@ -40,7 +40,7 @@ class Acception extends Notification implements ShouldQueue
             
             'position' => $this->application->position,
             'city' => $this->application->city,
-            'company' => Company::where('id', $this->application->company_id)->value('name')
+            'company' => Company::where('company_id', $this->application->company_id)->value('name')
 
       
         ];
@@ -58,7 +58,7 @@ class Acception extends Notification implements ShouldQueue
             
             'position' => $this->application->position,
             'city' => $this->application->city,
-            'company' => Company::where('id', $this->application->company_id)->value('name')
+            'company' => Company::where('company_id', $this->application->company_id)->value('name')
            
         ];
     }

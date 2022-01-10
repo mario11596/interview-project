@@ -30,23 +30,24 @@ class ApplicationsController extends Controller
                         ->join('companies','companies.company_id','=', 'jobs.company_id')
                         ->get();
 
-
-        return view('', compact('all_jobs'));
+        //dd($all_jobs);
+        return view('candidate.applications-index', compact('all_jobs'));
     }
 
 
     public function indexCompany() {
         $userCheck= User::findOrFail(Auth::id());
-        $user = Company::where("email_id","=",$userCheck->email)->get()->first();
-
+        $user = Company::where("email_id","=",$userCheck->email)->value('company_id');
+        
         $all_jobs = DB::table('job_applications')
                         ->join('jobs', 'job_applications.job_id', '=' ,'jobs.job_id')
-                        ->join('candidates', 'job_applications.user_id', '=' ,'candidates.candidate_id')
-                        ->where('jobs.company_id',$user->id)
+                        ->join('users', 'job_applications.user_id', '=' ,'users.id')
+                        ->join('candidates', 'users.email', '=' ,'candidates.email_id')
+                        ->where('jobs.company_id',$user)
                         ->get();
-        $all_jobs->groupBy('user_id');
 
-        return view('', compact('all_jobs'));
+        //dd($all_jobs);
+        return view('company.applications-index', compact('all_jobs'));
     }
 
     public function jobsClose($id) {
@@ -55,11 +56,11 @@ class ApplicationsController extends Controller
         $application->status = "Odobreno";
         $application->save();
 
-
+        
         event(new AcceptionEvent($application));
         //$application->notify(new Acception($application));
 
-        return redirect('applications');
+        return redirect('company/applications');
     }
 
     public function jobsOpen($id) {
@@ -68,7 +69,7 @@ class ApplicationsController extends Controller
         $application->save();
 
 
-        return redirect('applications');
+        return redirect('company/applications');
     }
 
     public function store(Request $request) {
@@ -90,17 +91,21 @@ class ApplicationsController extends Controller
     public function deleteCandidate($id) {
         JobApplication::where('user_id', Auth::id())->where('application_id',$id)->delete();
 
-        return redirect('applications');
+        return redirect('candidate/applications');
     }
 
-    public function email(){
+    public function email($id){
         $userCheck= User::findOrFail(Auth::id());
         $role =  $userCheck->is_company;
+        //$company = Company::where('id', $id)->first();
 
         if($role){
-            return view('email.emailTemplate');
+            $candidate = User::where('id', $id)->first();
+            //dd($candidate);
+            return view('email.emailTemplateCompany', compact('candidate'));
         } else {
-            return view('email.emailTemplateCandidate');
+            $company = Company::where('company_id', $id)->first();
+            return view('email.emailTemplateCandidate', compact('company'));
         }
     }
 
@@ -111,14 +116,40 @@ class ApplicationsController extends Controller
             'content' => 'required'
         ]);
         if(Auth::user()->is_company){
-            $userTo = Candidate::findOrFail($id);
+            $userTo = User::findOrFail($id);
+            $user_email = $userTo->email;
         } else {
             $userTo = Company::findOrFail($id);
+            $user_email = $userTo->email_id;
         }
-       $userTo_email = $userTo->email_id;
+       $userTo_email = $user_email;
 
        Mail::to($userTo_email)->send(new MailContact($request));
-       return redirect('applications/email');
+       //return redirect('candidate.applications/email');
+       if(Auth::user()->is_company){
+        return redirect('company/applications');
+    } else {
+        return redirect('candidate/applications');
+    }
        //return response()->json(['message' => 'Request completed']);
+    }
+
+    public function showCandidate($id){
+        $user_check = User::where('id', $id)->value('email');
+        $candidate = Candidate::where('email_id',$user_check)->first();
+
+        return view('company.applications-show', compact('candidate'));
+    }
+
+    public function showPDF($id){
+        $pathToFile = public_path().'/files/uploads/'.$id.'.pdf';
+
+        if (file_exists($pathToFile)) {
+
+        $headers = [
+            'Content-Type' => 'application/pdf'
+        ];
+            return response()->file($pathToFile);
+        }
     }
 }

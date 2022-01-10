@@ -14,7 +14,7 @@ class CreateInterviewsTable extends Migration
     public function up()
     {
         Schema::create('interviews', function (Blueprint $table) {
-            $table->id();
+            $table->id('interview_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('job_id');
             $table->date('date');
@@ -24,7 +24,7 @@ class CreateInterviewsTable extends Migration
 
 
             $table->foreign('job_id')
-                ->references('id')->on('jobs')
+                ->references('job_id')->on('jobs')
                 ->onDelete('cascade');
 
             $table->foreign('user_id')
