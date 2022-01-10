@@ -22,7 +22,11 @@ class NotificationsController extends Controller
     public function notificationMark(){
 
         auth()->user()->unreadNotifications->markAsRead();
-        return redirect('notifications');
+        if(Auth::user()->is_company){
+            return redirect('/company/notifications');
+        } else {
+            return redirect('/candidate/notifications');
+        }
     }
     
     public function notificationMarkOne($id){
@@ -34,7 +38,11 @@ class NotificationsController extends Controller
         if($notification){
             $notification->markAsRead();
 
-            return redirect('notifications');
+            if(Auth::user()->is_company){
+                return redirect('/company/notifications');
+            } else {
+                return redirect('/candidate/notifications');
+            }
         }
     }  
 }
