@@ -8,15 +8,15 @@
     <div class="py-5">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex items-center justify-center">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg m-5 w-1/2 p-6 space-y-4">
-            <form action="{{ route('candidate.email_send_applications', $company->company_id ) }}" method="POST" >
+            <form action="{{ route('company.email_send_applications', $candidate->id ) }}" method="POST" >
                 @csrf
                 <div class="mb-4">
                         <x-jet-label for="title" value="Naslov"/>
                         <x-jet-input id="title" class="block mt-1 w-full bg-gray-100" type="text" name="title" required/>
                 </div>
-                <div class="mb-4">
+                 <div class="mb-4">
                         <x-jet-label for="email" value="E-mail adresa primatelja"/>
-                        <x-jet-input id="email" class="block mt-1 w-full bg-gray-100" type="text" name="email" value="{{ $company->email_id}}" disabled/>
+                        <x-jet-input id="email" class="block mt-1 w-full bg-gray-100" type="text" name="email" value="{{ $candidate->email}}" disabled/>
                 </div>
 
                 <div class="mb-4">
@@ -30,7 +30,7 @@
 
             </form>
                 <div class="flex justify-center">
-                    <a href="{{ route('candidate.index_applications') }}">
+                    <a href="{{ route('company.index_applications') }}">
                         <x-jet-button class="hover:bg-red-delete"> ODUSTANI</x-jet-button>
                     </a>
                 </div>

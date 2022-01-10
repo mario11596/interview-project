@@ -58,7 +58,7 @@ class CreateNewUser implements CreatesNewUsers
             $candidate->address = $input['addressCandidate'];
             $candidate->city = $input['cityCandidate'];
             $candidate->mobile_number = $input['mobile_number'];
-            $candidate->status = $input['status'];
+            $candidate->status_type = $input['status_type'];
             $candidate->OIB = $input['OIB'];
             $candidate->email_id = $input['email'];
             $candidate->save();

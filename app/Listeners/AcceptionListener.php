@@ -38,11 +38,11 @@ class AcceptionListener
 
         $applicaton_job = DB::table('job_applications')
                         ->where('user_id', $event->application->user_id)
-                        ->where('id', $event->application->id)
-                        ->value('id');
-                     
-        $applicaton = Job::where('id', $applicaton_job)->first();
-
+                        ->where('application_id', $event->application->application_id)
+                        ->value('job_id');
+                 
+        $applicaton = Job::where('job_id', $applicaton_job)->first();
+        
         Notification::send($user, new Acception($applicaton));
     }
 }
