@@ -8,30 +8,52 @@ use App\Models\Interview;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class InterviewController extends Controller
 {
     public function index(Request $request) {
         if (Auth::user()->is_company) {
             $id = Company::where('email_id', Auth::user()->email)->value('company_id');
-            $jobs = Job::where('company_id', $id)->pluck('job_id');
-            $interviews = array();
 
-            foreach ($jobs as $job) {
-                $job_interviews = Interview::where('job_id', $job)
-                                            ->orderBy('date', 'asc')
-                                            ->orderBy('time', 'asc')
-                                            ->get();
-                array_push($interviews, $job_interviews->toArray());
-            }
-            return view('', compact('interviews'));
+            $before = DB::table('interviews')
+                ->join('jobs', 'interviews.job_id', '=', 'jobs.job_id')
+                ->join('job_applications', 'jobs.job_id', '=', 'job_applications.job_id')
+                ->join('users', 'interviews.user_id', '=', 'users.id')
+                ->join('candidates', 'users.email', '=', 'candidates.email_id')
+                ->where('jobs.company_id', '=', $id)
+                ->where('date', '<', date("Y-m-d"))
+                ->get();
+
+            $after = DB::table('interviews')
+                ->join('jobs', 'interviews.job_id', '=', 'jobs.job_id')
+                ->join('job_applications', 'jobs.job_id', '=', 'job_applications.job_id')
+                ->join('users', 'interviews.user_id', '=', 'users.id')
+                ->join('candidates', 'users.email', '=', 'candidates.email_id')
+                ->where('jobs.company_id', '=', $id)
+                ->where('date', '>=', date("Y-m-d"))
+                ->get();
+
+            dd($before, $after);
+            return view('', compact(['before', 'after']));
         } else {
-            $interviews = Interview::where('user_id', Auth::user()->id)
-                                    ->orderBy('date', 'asc')
-                                    ->orderBy('time', 'asc')
-                                    ->get();
+            $before = DB::table('interviews')
+                ->join('jobs', 'interviews.job_id', '=', 'jobs.job_id')
+                ->join('job_applications', 'jobs.job_id', '=', 'job_applications.job_id')
+                ->join('companies', 'jobs.company_id', '=', 'companies.company_id')
+                ->where('interviews.user_id', '=', Auth::user()->id)
+                ->where('date', '<', date("Y-m-d"))
+                ->get();
 
-            return view('', compact('interviews'));
+            $after = DB::table('interviews')
+                ->join('jobs', 'interviews.job_id', '=', 'jobs.job_id')
+                ->join('job_applications', 'jobs.job_id', '=', 'job_applications.job_id')
+                ->join('companies', 'jobs.company_id', '=', 'companies.company_id')
+                ->where('interviews.user_id', '=', Auth::user()->id)
+                ->where('date', '>=', date("Y-m-d"))
+                ->get();
+
+            return view('', compact(['before', 'after']));
         }
     }
 
