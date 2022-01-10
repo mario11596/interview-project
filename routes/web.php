@@ -30,9 +30,12 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [HomeControll
 
 Route::group(['prefix' => 'company','as' => 'company.', 'middleware' => ['auth:sanctum', 'verified', 'is.company']], function(){
     Route::get('dashboard', [JobController::class, 'index'])->name('company_dashboard');
+    Route::get('dashboard/{id}', [JobController::class, 'details'])->name('job_details');
     Route::get('create', [JobController::class, 'create'])->name('create_job');
     Route::post('store', [JobController::class, 'store'])->name('store_job');
     Route::get('delete/{id}', [JobController::class, 'delete'])->name('delete_job');
+    Route::get('edit/{id}', [JobController::class, 'edit'])->name('edit_job');
+    Route::post('update/{id}', [JobController::class, 'update'])->name('update_job');
     Route::get('search', [JobController::class, 'searchCompany'])->name('search');
 
     Route::get('information', [InformationController::class, 'index'])->name('index_information');
@@ -56,6 +59,9 @@ Route::group(['prefix' => 'company','as' => 'company.', 'middleware' => ['auth:s
 
 Route::group(['prefix' => 'candidate','as' => 'candidate.', 'middleware' => ['auth:sanctum', 'verified', 'is.candidate']], function(){
     Route::get('dashboard', [JobController::class, 'index'])->name('candidate_dashboard');
+    Route::get('dashboard/{id}', [JobController::class, 'details'])->name('job_details');
+    Route::get('dashboard/{id}/apply', [ApplicationsController::class, 'create'])->name('create_application');
+    Route::post('dashboard/{id}/store', [ApplicationsController::class, 'store'])->name('store_application');
     Route::get('search', [JobController::class, 'searchCandidate'])->name('search');
 
     Route::get('information', [InformationController::class, 'index'])->name('index_information');
@@ -70,6 +76,7 @@ Route::group(['prefix' => 'candidate','as' => 'candidate.', 'middleware' => ['au
     Route::get('interviews/delete/{id}', [InterviewController::class, 'delete'])->name('delete_interview');
 
     Route::get('applications', [ApplicationsController::class, 'indexCandidate'])->name('index_applications');
+    Route::get('applications/email', [ApplicationsController::class, 'email'])->name('email_applications');
     Route::get('applications/create', [ApplicationsController::class, 'create'])->name('create_application');
     Route::post('applications/store', [ApplicationsController::class, 'store'])->name('store_application');
     Route::get('applications/email/{id}', [ApplicationsController::class, 'email'])->name('email_applications');

@@ -11,7 +11,7 @@
                 <form method="post" action="{{route('company.store_job')}}">
                     {{ csrf_field() }}
                     <div class="mb-4">
-                        <x-jet-label for="position" value="{{ __('Radndo mjesto') }}"/>
+                        <x-jet-label for="position" value="{{ __('Radno mjesto') }}"/>
                         <x-jet-input id="position" class="block mt-1 w-full bg-gray-100" type="text" name="position"
                                      required/>
                     </div>

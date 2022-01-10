@@ -34,7 +34,7 @@
                                 <h2 class="text-black font-semibold text-xl">{{$job->company->name}}</h2>
                                 <p class="mt-1 mb-4 text-gray-400 text-sm">{{$job->position}}</p>
                                 <div class="flex justify-end">
-                                    <a href="">
+                                    <a href="{{ route('company.job_details', [$job->job_id])}}">
                                         <x-jet-button class="mr-3 hover:bg-blue-details">Detalji</x-jet-button>
                                     </a>
                                     <a href="{{ route('company.delete_job', [$job->job_id]) }}"

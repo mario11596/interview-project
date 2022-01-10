@@ -52,7 +52,7 @@ class ApplicationsController extends Controller
 
     public function jobsClose($id) {
 
-        $application = JobApplication::where('application_id',$id)->firstOrFail();
+        $application = JobApplication::where('application_id', $id)->firstOrFail();
         $application->status = "Odobreno";
         $application->save();
 
@@ -72,24 +72,22 @@ class ApplicationsController extends Controller
         return redirect('company/applications');
     }
 
-    public function store(Request $request) {
-        $id = Candidate::where('email_id', Auth::user()->email)->value('candidate_id');
-        $jobApplicaton = JobApplication::create(['user_id' => $id] + $request->all());
+    public function store(Request $request, $id) {
+        $user_id = Auth::user()->id;
+        $jobApplicaton = JobApplication::create(['user_id' => $user_id, 'job_id' => $id]);
 
         event(new NewApplicationEvent($jobApplicaton));
 
-        return redirect('dashboard');
+        return redirect()->action("InterviewController@store", [$request, $id]);
     }
 
-    public function create(Request $request) {
-        //return view('');
-        $job_id = $request->input('job_id');
-        $times = $this->interviewService->getTimes($job_id);
-        return view('', compact($times));
+    public function create($id) {
+        $times = $this->interviewService->getTimes($id);
+        return view('candidate.application-create', compact(['times', 'id']));
     }
 
     public function deleteCandidate($id) {
-        JobApplication::where('user_id', Auth::id())->where('application_id',$id)->delete();
+        JobApplication::where('user_id', Auth::id())->where('application_id', $id)->delete();
 
         return redirect('candidate/applications');
     }
