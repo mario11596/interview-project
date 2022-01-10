@@ -39,6 +39,8 @@ class InterviewController extends Controller
     public function store(Request $request, $id) {
         $user_id = Candidate::where('email_id', Auth::user()->email)->value('candidate_id');
         Interview::create(['user_id' => $user_id, 'job_id' => $id] + $request->all());
+
+        redirect("/dashboard");
     }
 
     public function delete($id) {
