@@ -26,8 +26,7 @@ class InterviewController extends Controller
             }
             return view('', compact('interviews'));
         } else {
-            $id = Candidate::where('email_id', Auth::user()->email)->value('candidate_id');
-            $interviews = Interview::where('user_id', $id)
+            $interviews = Interview::where('user_id', Auth::user()->id)
                                     ->orderBy('date', 'asc')
                                     ->orderBy('time', 'asc')
                                     ->get();
