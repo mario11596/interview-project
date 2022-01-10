@@ -41,11 +41,11 @@
 
                             @if($all_job->status == 'Cekanje')
                                 <td>
-                                <a href="{{ route('company.jobsClose',  $all_job->app_job_id) }}">Odobri prijavu</a>
+                                <a href="{{ route('company.jobsClose',  $all_job->job_id) }}">Odobri prijavu</a>
                                 </td>          
                             @else 
                                 <td>
-                                <a href="{{ route('company.jobsOpen',  $all_job->app_job_id) }}">Cekanje prijave</a>
+                                <a href="{{ route('company.jobsOpen',  $all_job->job_id) }}">Cekanje prijave</a>
                                 </td>                        
                             @endif 
                             <td class="flex justify-center">

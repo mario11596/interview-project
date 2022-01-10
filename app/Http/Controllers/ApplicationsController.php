@@ -30,7 +30,7 @@ class ApplicationsController extends Controller
                         ->join('companies','companies.company_id','=', 'jobs.company_id')
                         ->get();
 
-
+        //dd($all_jobs);
         return view('candidate.applications-index', compact('all_jobs'));
     }
 
@@ -38,11 +38,12 @@ class ApplicationsController extends Controller
     public function indexCompany() {
         $userCheck= User::findOrFail(Auth::id());
         $user = Company::where("email_id","=",$userCheck->email)->value('company_id');
-
+        
         $all_jobs = DB::table('job_applications')
                         ->join('jobs', 'job_applications.job_id', '=' ,'jobs.job_id')
-                        ->join('candidates', 'job_applications.user_id', '=' ,'candidates.candidate_id')
-                        ->where('jobs.company_id',$user->id)
+                        ->join('users', 'job_applications.user_id', '=' ,'users.id')
+                        ->join('candidates', 'users.email', '=' ,'candidates.email_id')
+                        ->where('jobs.company_id',$user)
                         ->get();
 
         //dd($all_jobs);
@@ -55,7 +56,7 @@ class ApplicationsController extends Controller
         $application->status = "Odobreno";
         $application->save();
 
-
+        
         event(new AcceptionEvent($application));
         //$application->notify(new Acception($application));
 
