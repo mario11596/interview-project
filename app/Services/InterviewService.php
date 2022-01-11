@@ -2,10 +2,14 @@
 
 namespace App\Services;
 
+use App\Models\Candidate;
+use App\Models\Interview;
 use App\Models\Job;
 use DateInterval;
 use DatePeriod;
 use DateTime;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class InterviewService {
@@ -57,5 +61,10 @@ class InterviewService {
             $free_times[$date] = array_values(array_diff($available_times, $taken_times));
         }
         return $free_times;
+    }
+
+    public function store(Request $request, $id) {
+        $user_id = Auth::user()->id;
+        Interview::create(['user_id' => $user_id, 'job_id' => $id] + $request->all());
     }
 }

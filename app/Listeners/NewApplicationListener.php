@@ -33,15 +33,13 @@ class NewApplicationListener
      * @return void
      */
     public function handle(NewApplicationEvent $event){
-        
-        $company_email = JobApplication::where('id', $event->jobApplicaton->id)->value('job_id');
-        $company_job = Job::where('id', $company_email)->value('company_id');
-        $company = Company::where('id', $company_job)->first();
+        $company_job = Job::where('job_id', $event->jobApplication->job_id)->value('company_id');
+        $company_email = Company::where('company_id', $company_job)->value('email_id');
+        $company = User::where('email', $company_email)->first();
 
-        $user_application = User::where('id',  $event->jobApplicaton->user_id)->value('email_id');
-        $jobApplicaton = Candidate::where('email_id', $user_application)->first;
+        $user_email = User::where('id', $event->jobApplication->user_id)->value('email');
+        $jobApplication = Candidate::where('email_id', $user_email)->first();
 
-
-        Notification::send($company, new NewApplication($jobApplicaton));
+        Notification::send($company, new NewApplication($jobApplication));
     }
 }

@@ -11,16 +11,16 @@ use Illuminate\Notifications\Notification;
 class NewApplication extends Notification
 {
     use Queueable;
-    public $jobApplicaton;
+    public $jobApplication;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($jobApplicaton)
+    public function __construct($jobApplication)
     {
-        $this->jobApplicaton = $jobApplicaton;
+        $this->jobApplication = $jobApplication;
     }
 
     /**
@@ -56,20 +56,20 @@ class NewApplication extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            
+
             'name' => $this->jobApplication->name,
             'surname' => $this->jobApplication->surname,
             'city' => $this->jobApplication->city,
         ];
     }
-   
+
     /**
      * Get the array representation of the notification.
      *
      * @param  mixed  $notifiable
      * @return array
      */
-    
+
     public function toArray($notifiable)
     {
         return [
