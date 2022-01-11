@@ -34,7 +34,6 @@ class InterviewController extends Controller
                 ->where('date', '>=', date("Y-m-d"))
                 ->get();
 
-            dd($before, $after);
             return view('', compact(['before', 'after']));
         } else {
             $before = DB::table('interviews')
@@ -55,13 +54,6 @@ class InterviewController extends Controller
 
             return view('', compact(['before', 'after']));
         }
-    }
-
-    public function store(Request $request, $id) {
-        $user_id = Candidate::where('email_id', Auth::user()->email)->value('candidate_id');
-        Interview::create(['user_id' => $user_id, 'job_id' => $id] + $request->all());
-
-        redirect("/dashboard");
     }
 
     public function delete($id) {
