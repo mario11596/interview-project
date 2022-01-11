@@ -15,15 +15,15 @@ class NewApplicationEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $jobApplicaton;
+    public $jobApplication;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(JobApplication $jobApplicaton)
+    public function __construct(JobApplication $jobApplication)
     {
-        $this->jobApplicaton = $jobApplicaton;
+        $this->jobApplication = $jobApplication;
     }
 
     /**
