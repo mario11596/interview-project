@@ -38,7 +38,7 @@ class ApplicationsController extends Controller
     public function indexCompany() {
         $userCheck= User::findOrFail(Auth::id());
         $user = Company::where("email_id","=",$userCheck->email)->value('company_id');
-        
+
         $all_jobs = DB::table('job_applications')
                         ->join('jobs', 'job_applications.job_id', '=' ,'jobs.job_id')
                         ->join('users', 'job_applications.user_id', '=' ,'users.id')
@@ -73,11 +73,12 @@ class ApplicationsController extends Controller
 
     public function store(Request $request, $id) {
         $user_id = Auth::user()->id;
-        $jobApplicaton = JobApplication::create(['user_id' => $user_id, 'job_id' => $id]);
+        $jobApplicaton = JobApplication::create(['user_id' => $user_id, 'job_id' => $id, 'status' => "w"]);
+        $this->interviewService->store($request, $id);
 
         event(new NewApplicationEvent($jobApplicaton));
 
-        return redirect()->action("InterviewController@store", [$request, $id]);
+        return redirect("/dashboard");
     }
 
     public function create($id) {
@@ -94,11 +95,9 @@ class ApplicationsController extends Controller
     public function email($id){
         $userCheck= User::findOrFail(Auth::id());
         $role =  $userCheck->is_company;
-        //$company = Company::where('id', $id)->first();
 
         if($role){
             $candidate = User::where('id', $id)->first();
-            //dd($candidate);
             return view('email.emailTemplateCompany', compact('candidate'));
         } else {
             $company = Company::where('company_id', $id)->first();

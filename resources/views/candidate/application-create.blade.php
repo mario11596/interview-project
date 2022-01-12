@@ -1,3 +1,21 @@
+<script type="text/javascript">
+    var times = @json($times);
+
+    function dateSelected(value) {
+        if (value.length == 0) document.getElementById("time").innerHTML = "<option></option>";
+        else {
+            var timeOptions = "";
+
+            for (let i = 0; i < times[value].length; i++) {
+                timeOptions += "<option>" + times[value][i] + "</option>";
+            }
+
+            document.getElementById("time").innerHTML = timeOptions;
+        }
+    }
+
+</script>
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -8,23 +26,36 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex items-center justify-center">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg m-5 w-1/2 p-6 space-y-4">
-                <form method="post" action="{{route('candidate.store_application', [$id])}}">
+                <form method="POST" action="{{route('candidate.store_application', [$id])}}">
                     {{ csrf_field() }}
                     <div class="mb-4">
                         <x-jet-label for="date" value="{{ __('Datum intervjua') }}"/>
-                        <x-jet-input id="date" class="block mt-1 w-full bg-gray-100" type="select" name="date"
-                                     required/>
+                        <select name="date" id="date" class="block mt-1 w-full bg-gray-100" onChange="dateSelected(this.value);" required>
+                            <option value="" disabled selected>Odabir</option>
+                            @foreach($times as $date => $time)
+                                <option value="{{$date}}">{{$date}}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="mb-4">
                         <x-jet-label for="time" value="{{ __('Vrijeme intervjua') }}"/>
-                        <x-jet-input id="time" class="block mt-1 w-full bg-gray-100" type="select" name="time"
-                                     required/>
+                        <select name="time" id="time" class="block mt-1 w-full bg-gray-100" required>
+                            <option value="" disabled selected>Odabir</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <x-jet-label for="type" value="{{ __('Vrsta intervjua') }}"/>
+                        <select name="type" id="type" class="block mt-1 w-full bg-gray-100" required>
+                            <option value="" disabled selected>Odabir</option>
+                            <option value="live">Uživo</option>
+                            <option value="online">Online</option>
+                        </select>
                     </div>
                     <div class="mb-4 flex justify-center">
                         <x-jet-button type="submit" class="hover:bg-green-new"> SPREMI</x-jet-button>
                     </div>
                     <div class="flex justify-center">
-                        <a href="{{ route('candidate.candidate_dashboard') }}">
+                        <a href="{{ route('candidate.job_details', [$id]) }}">
                             <x-jet-button class="hover:bg-red-delete"> ODUSTANI</x-jet-button>
                         </a>
                     </div>
