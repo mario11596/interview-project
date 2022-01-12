@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\Company;
+use App\Models\JobApplication;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -37,7 +38,7 @@ class Acception extends Notification implements ShouldQueue
     public function toDatabase($notifiable)
     {
         return [
-            
+            'status' => $this->application->status,
             'position' => $this->application->position,
             'city' => $this->application->city,
             'company' => Company::where('company_id', $this->application->company_id)->value('name')
@@ -55,7 +56,7 @@ class Acception extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            
+            'status' => $this->application->status,
             'position' => $this->application->position,
             'city' => $this->application->city,
             'company' => Company::where('company_id', $this->application->company_id)->value('name')

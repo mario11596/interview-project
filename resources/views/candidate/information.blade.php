@@ -11,8 +11,7 @@
                 <div class="m-3">
                     <div class="flex">
                         <div class="mr-4 h-28 w-28">
-                            <img src="https://stemgames.hr/wp-content/uploads/2017/12/riteh.gif" alt="image"
-                                 class="rounded-full"/></div>
+                        <img src="{{ asset('files/photos/'.Auth::user()->email.'.JPG') }}" class="rounded-full"/></div>
                         <div class="space-y-1 flex flex-col w-full">
                             <div class="flex w-full flex items-center pb-8">
                                 <div class="w-full h-3 mt-8">

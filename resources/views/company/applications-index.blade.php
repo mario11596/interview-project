@@ -20,7 +20,7 @@
                             <th>Prezime</th>
                             <th>Status</th>
                             <th>Stanje prijave</th>
-                            <th>Promjeni status</th>
+                            <th colspan="2">Promjeni status</th>
                             <th>Opcije</th>
                         </tr>
 
@@ -30,24 +30,22 @@
                             <td>{{ $all_job->name }}</td>
                             <td>{{ $all_job->surname }}</td>
                             <td>{{ $all_job->status_type }}</td>
+                            <td>{{ $all_job->status }}</td>
                             <td>
-                            @if($all_job->status == 'Cekanje')
-                                <p>{{ $all_job->status }}</p>
-                            </td>
+                            @if($all_job->status == 'Odbijeno')
+                                <x-jet-button class="hover:bg-green-new" disabled>Odobri</x-jet-button> 
+                            </td>          
+                            <td>   
+                                <x-jet-button class="hover:bg-red-delete" disabled>Odbij</x-jet-button>
                             @else
-                                <p class="text-warning">{{ $all_job->status }}</p>
-                            @endif
+                            <x-jet-button class="hover:bg-green-new">
+                            <a href="{{ route('company.jobsAccept',  $all_job->job_id) }}">Odobri</a></x-jet-button>
+                            </td>          
+                            <td>
+                            <x-jet-button class="hover:bg-red-delete">
+                            <a href="{{ route('company.jobsReject',  $all_job->job_id) }}">Odbij</a></x-jet-button>
                             </td>
-
-                            @if($all_job->status == 'Cekanje')
-                                <td>
-                                <a href="{{ route('company.jobsClose',  $all_job->job_id) }}">Odobri prijavu</a>
-                                </td>          
-                            @else 
-                                <td>
-                                <a href="{{ route('company.jobsOpen',  $all_job->job_id) }}">Cekanje prijave</a>
-                                </td>                        
-                            @endif 
+                            @endif                        
                             <td class="flex justify-center">
                                 <a href="{{ route('company.email_applications', $all_job->user_id) }}" class="btn btn-info">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">

@@ -50,7 +50,15 @@ class InformationController extends Controller
             'city' => 'required',
             'number_employees' => 'required',
             'type' => 'required',
+            "photo" => "required_without_all:name,address,city,number_employees,type|mimes:jpg"
         ]);
+        
+        if($request->file('photo')){
+            $file = $request->file('photo');
+            $fileName = Auth::user()->email.'.'.$file->getClientOriginalExtension(); 
+            $filePath = public_path() . '/files/photos/';
+            $file->move($filePath, $fileName); 
+        }
 
         $company->name = $request['name'];
         $company->address = $request['address'];
@@ -89,14 +97,21 @@ class InformationController extends Controller
             'mobile_number' => 'required',
             'status_type' => 'required',
             'OIB' => 'required', 
-            "file" => "required_without_all:name,surname,address,city,mobile_number,status_type,OIB|mimes:pdf|max:10000"
+            "file" => "required_without_all:name,surname,address,city,mobile_number,status_type,OIB|mimes:pdf|max:10000",
+            "photo" => "required_without_all:name,surname,address,city,mobile_number,status_type,OIB,file|mimes:jpg"
         ]);
         if($request->file('file')){
             $file = $request->file('file');
             $fileName = Auth::user()->email.'.'.$file->getClientOriginalExtension(); 
             $filePath = public_path() . '/files/uploads/';
-            $file->move($filePath, $fileName);
-            
+            $file->move($filePath, $fileName); 
+        }
+       // dd($request->file('photo'));
+        if($request->file('photo')){
+            $file = $request->file('photo');
+            $fileName = Auth::user()->email.'.'.$file->getClientOriginalExtension(); 
+            $filePath = public_path() . '/files/photos/';
+            $file->move($filePath, $fileName); 
         }
 
         $candidate->name = $request['name'];
@@ -117,7 +132,7 @@ class InformationController extends Controller
     public function destroyPDF($id) {
         $pathToFile = public_path().'/files/uploads/'.$id.'.pdf';
         
-    
+      
         if (File::exists($pathToFile)) {
             File::delete(public_path('/files/uploads/'.$id.'.pdf'));
         }
@@ -135,6 +150,20 @@ class InformationController extends Controller
             'Content-Type' => 'application/pdf'
         ];
             return response()->file($pathToFile);
+        }
+    }
+
+
+    public function destroyPhoto($id) {
+        $pathToFile = public_path().'/files/photos/'.$id.'.JPG';
+        
+        if (File::exists($pathToFile)) {
+            File::delete(public_path('/files/photos/'.$id.'.JPG'));
+        }
+        if(Auth::user()->is_company){
+            return redirect('/company/information');
+        } else {
+            return redirect('/candidate/information');
         }
     }
 }

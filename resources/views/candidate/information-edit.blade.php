@@ -56,6 +56,20 @@
                         <x-jet-label for="file" value="Životopis (.pdf format)"/>
                         <x-jet-input id="file" class="block mt-1 w-full bg-gray-100" type="file" name="file" />
                     </div>
+                    
+                    @php($photo = 'files/photos/'.Auth::user()->email.'.JPG')
+                    @if(file_exists($photo))
+                    <div class="mb-4">
+                        <x-jet-label for="photo" value="Profilna fotografija"/>
+                        <img src="{{ asset('files/photos/'.Auth::user()->email.'.JPG') }}" width="150" height="150 "/>
+                        <button type="submit" style="color:red"> <a href="{{ route('candidate.destroy_photo',Auth::user()->email) }}" onclick="return confirm('Jeste li sigurni da želite izbrisati fotografiju?');">Obriši</a></button>
+                    </div>
+                    @else
+                    <div class="mb-4">
+                        <x-jet-label for="photo" value="Profilna fotografija (.jpg format)"/>
+                        <x-jet-input id="photo" class="block mt-1 w-full bg-gray-100" type="file" name="photo" />
+                    </div>
+                    @endif
 
                     <div class="flex justify-center">
                         <x-jet-button type="submit" class="hover:bg-green-new"> SPREMI</x-jet-button>

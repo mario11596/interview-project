@@ -41,14 +41,15 @@ Route::group(['prefix' => 'company','as' => 'company.', 'middleware' => ['auth:s
     Route::get('information', [InformationController::class, 'index'])->name('index_information');
     Route::get('information/{id}/edit', [InformationController::class, 'editCompany'])->name('edit_information');
     Route::post('information/{id}', [InformationController::class, 'updateCompany'])->name('update_information');
+    Route::get('information/delete/photo/{id}', [InformationController::class, 'destroyPhoto'])->name('destroy_photo');
 
     Route::get('interviews', [InterviewController::class, 'index'])->name('index_interviews');
 
     Route::get('applications', [ApplicationsController::class, 'indexCompany'])->name('index_applications');
     Route::get('applications/{id}/show', [ApplicationsController::class, 'showCandidate'])->name('show_applications');
     Route::get('information/show/PDF/{id}', [ApplicationsController::class, 'showPDF'])->name('show_pdf');
-    Route::get('applications/{applications}/close', [ApplicationsController::class, 'jobsClose'])->name('jobsClose');
-    Route::get('applications/{applications}/open', [ApplicationsController::class, 'jobsOpen'])->name('jobsOpen');
+    Route::get('applications/{applications}/accept', [ApplicationsController::class, 'jobsAccept'])->name('jobsAccept');
+    Route::get('applications/{applications}/reject', [ApplicationsController::class, 'jobsReject'])->name('jobsReject');
     Route::get('applications/email/{id}', [ApplicationsController::class, 'email'])->name('email_applications');
     Route::post('applications/email/{id}/send', [ApplicationsController::class, 'sendEmail'])->name('email_send_applications');
 
@@ -63,9 +64,10 @@ Route::group(['prefix' => 'candidate','as' => 'candidate.', 'middleware' => ['au
     Route::get('dashboard/{id}/apply', [ApplicationsController::class, 'create'])->name('create_application');
     Route::post('dashboard/{id}/store', [ApplicationsController::class, 'store'])->name('store_application');
     Route::get('search', [JobController::class, 'searchCandidate'])->name('search');
-
+    
     Route::get('information', [InformationController::class, 'index'])->name('index_information');
     Route::get('information/{id}/edit', [InformationController::class, 'editCandidate'])->name('edit_information');
+    Route::get('information/delete/photo/{id}', [InformationController::class, 'destroyPhoto'])->name('destroy_photo');
     Route::post('information/{id}', [InformationController::class, 'updateCandidate'])->name('update_information');
     Route::get('information/delete/{id}', [InformationController::class, 'destroyPDF'])->name('destroy_pdf');
     Route::get('information/PDF/{id}', [InformationController::class, 'showPDF'])->name('show_pdf');
@@ -76,6 +78,7 @@ Route::group(['prefix' => 'candidate','as' => 'candidate.', 'middleware' => ['au
     Route::get('interviews/delete/{id}', [InterviewController::class, 'delete'])->name('delete_interview');
 
     Route::get('applications', [ApplicationsController::class, 'indexCandidate'])->name('index_applications');
+    Route::get('applications/{id}/show', [ApplicationsController::class, 'showCompany'])->name('show_applications');
     Route::get('applications/email', [ApplicationsController::class, 'email'])->name('email_applications');
     Route::get('applications/create', [ApplicationsController::class, 'create'])->name('create_application');
     Route::post('applications/store', [ApplicationsController::class, 'store'])->name('store_application');

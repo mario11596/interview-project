@@ -26,9 +26,8 @@
                 <div class="grid grid-cols-3 gap-4 flex flex-wrap justify-start m-3">
                     @forelse($jobs as $job)
                         <div class="flex p-5 space-x-4 items-center shadow-md max-w-sm rounded-md">
-                            <img
-                                src="https://stemgames.hr/wp-content/uploads/2017/12/riteh.gif"
-                                alt="image"
+                            <img src="{{ asset('files/photos/'.Auth::user()->email.'.JPG') }}"
+                                alt="slika"
                                 class="h-14 w-14 rounded-full"/>
                             <div class="w-full">
                                 <h2 class="text-black font-semibold text-xl">{{$job->company->name}}</h2>
