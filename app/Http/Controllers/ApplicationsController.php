@@ -50,24 +50,23 @@ class ApplicationsController extends Controller
         return view('company.applications-index', compact('all_jobs'));
     }
 
-    public function jobsClose($id) {
+    public function jobsAccept($id) {
 
         $application = JobApplication::where('application_id', $id)->firstOrFail();
-        $application->status = "Odobreno";
+        $application->status = "Prihvaćeno";
         $application->save();
 
-
         event(new AcceptionEvent($application));
-        //$application->notify(new Acception($application));
-
+       
         return redirect('company/applications');
     }
 
-    public function jobsOpen($id) {
+    public function jobsReject($id) {
         $application = JobApplication::where('application_id',$id)->firstOrFail();
-        $application->status = "Cekanje";
+        $application->status = "Odbijeno";
         $application->save();
 
+        event(new AcceptionEvent($application));
 
         return redirect('company/applications');
     }
@@ -136,6 +135,13 @@ class ApplicationsController extends Controller
         $candidate = Candidate::where('email_id',$user_check)->first();
 
         return view('company.applications-show', compact('candidate'));
+    }
+
+
+    public function showCompany($id){
+        $company = Company::where('company_id',$id)->first();
+
+        return view('candidate.applications-show', compact('company'));
     }
 
     public function showPDF($id){

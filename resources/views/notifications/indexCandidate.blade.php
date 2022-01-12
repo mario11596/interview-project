@@ -21,7 +21,7 @@
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="alert alert-success" role="alert">
                             {{ $notification->created_at->diffForhumans() }} </br>
-                                Prijava za poziciju {{ $notification->data['position'] }} tvrtke {{ $notification->data['company'] }} u gradu {{ $notification->data['city'] }} je uspješno završena!
+                                Prijava za poziciju {{ $notification->data['position'] }} tvrtke {{ $notification->data['company'] }} u gradu {{ $notification->data['city'] }} ima status {{ $notification->data['status'] }}!
                                 <a href="{{ route('candidate.notificationMarkOne', $notification->id) }}" class="flex justify-end">Označi kao pročitano</a>   
                             </div>
                         </div>
