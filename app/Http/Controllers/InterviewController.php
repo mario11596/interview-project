@@ -12,51 +12,86 @@ use Illuminate\Support\Facades\DB;
 
 class InterviewController extends Controller
 {
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         if (Auth::user()->is_company) {
             $id = Company::where('email_id', Auth::user()->email)->value('company_id');
 
             $before = DB::table('interviews')
+                ->select(
+                    '*',
+                    'interviews.type as interview_type')
                 ->join('jobs', 'interviews.job_id', '=', 'jobs.job_id')
-                ->join('job_applications', 'jobs.job_id', '=', 'job_applications.job_id')
+                ->leftJoin('job_applications', function ($join) {
+                    $join->on('interviews.user_id', '=', 'job_applications.user_id');
+                    $join->on('jobs.job_id', '=', 'job_applications.job_id');
+                })
                 ->join('users', 'interviews.user_id', '=', 'users.id')
                 ->join('candidates', 'users.email', '=', 'candidates.email_id')
                 ->where('jobs.company_id', '=', $id)
                 ->where('date', '<', date("Y-m-d"))
+                ->where('job_applications.status', '=', 'čekanje')
+                ->orderby('date')
+                ->orderBy('time')
                 ->get();
 
             $after = DB::table('interviews')
+                ->select('*',
+                    'interviews.type as interview_type')
                 ->join('jobs', 'interviews.job_id', '=', 'jobs.job_id')
-                ->join('job_applications', 'jobs.job_id', '=', 'job_applications.job_id')
+                ->leftJoin('job_applications', function ($join) {
+                    $join->on('interviews.user_id', '=', 'job_applications.user_id');
+                    $join->on('jobs.job_id', '=', 'job_applications.job_id');
+                })
                 ->join('users', 'interviews.user_id', '=', 'users.id')
                 ->join('candidates', 'users.email', '=', 'candidates.email_id')
                 ->where('jobs.company_id', '=', $id)
                 ->where('date', '>=', date("Y-m-d"))
+                ->orderby('date')
+                ->orderBy('time')
                 ->get();
 
-            return view('', compact(['before', 'after']));
+            return view('/company/calendar', compact(['before', 'after']));
         } else {
             $before = DB::table('interviews')
+                ->select(
+                    '*',
+                    'interviews.type as interview_type')
                 ->join('jobs', 'interviews.job_id', '=', 'jobs.job_id')
-                ->join('job_applications', 'jobs.job_id', '=', 'job_applications.job_id')
+                ->leftJoin('job_applications', function ($join) {
+                    $join->on('interviews.user_id', '=', 'job_applications.user_id');
+                    $join->on('jobs.job_id', '=', 'job_applications.job_id');
+                })
                 ->join('companies', 'jobs.company_id', '=', 'companies.company_id')
                 ->where('interviews.user_id', '=', Auth::user()->id)
                 ->where('date', '<', date("Y-m-d"))
+                ->where('job_applications.status', '=', 'čekanje')
+                ->orderby('date')
+                ->orderBy('time')
                 ->get();
 
             $after = DB::table('interviews')
+                ->select(
+                    '*',
+                    'interviews.type as interview_type')
                 ->join('jobs', 'interviews.job_id', '=', 'jobs.job_id')
-                ->join('job_applications', 'jobs.job_id', '=', 'job_applications.job_id')
+                ->leftJoin('job_applications', function ($join) {
+                    $join->on('interviews.user_id', '=', 'job_applications.user_id');
+                    $join->on('jobs.job_id', '=', 'job_applications.job_id');
+                })
                 ->join('companies', 'jobs.company_id', '=', 'companies.company_id')
                 ->where('interviews.user_id', '=', Auth::user()->id)
                 ->where('date', '>=', date("Y-m-d"))
+                ->orderby('date')
+                ->orderBy('time')
                 ->get();
 
-            return view('', compact(['before', 'after']));
+            return view('/candidate/calendar', compact(['before', 'after']));
         }
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $user = Candidate::where('email_id', Auth::user()->email)->value('candidate_id');
         $interview = Interview::find($id)->value('user_id');
         if ($user != $interview) {
