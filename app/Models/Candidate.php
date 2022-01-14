@@ -23,6 +23,6 @@ class Candidate extends Model
     ];
 
     public function user(){
-        return $this->belongsTo(User::class, 'email_id');
+        return $this->belongsTo(User::class, 'email_id', 'email');
     }
 }

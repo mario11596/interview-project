@@ -20,11 +20,11 @@ class Interview extends Model
     ];
 
     public function job(){
-        return $this->hasOne(Job::class, 'job_id');
+        return $this->hasOne(Job::class, 'job_id', 'job_id');
     }
 
     public function user(){
-        return $this->hasOne(User::class, 'user_id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
 }
