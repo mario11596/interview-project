@@ -73,7 +73,7 @@ class ApplicationsController extends Controller
 
     public function store(Request $request, $id) {
         $user_id = Auth::user()->id;
-        $jobApplicaton = JobApplication::create(['user_id' => $user_id, 'job_id' => $id, 'status' => "w"]);
+        $jobApplicaton = JobApplication::create(['user_id' => $user_id, 'job_id' => $id, 'status' => "Čekanje"]);
         $this->interviewService->store($request, $id);
 
         event(new NewApplicationEvent($jobApplicaton));

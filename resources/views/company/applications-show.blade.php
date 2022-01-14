@@ -11,8 +11,9 @@
                 <div class="m-3">
                     <div class="flex">
                         <div class="mr-4 h-28 w-28">
-                            <img src="https://stemgames.hr/wp-content/uploads/2017/12/riteh.gif" alt="image"
-                                 class="rounded-full"/></div>
+                        <img src="{{ asset('files/photos/'.Auth::user()->email.'.JPG') }}"
+                                alt="slika"
+                                class="h-14 w-14 rounded-full"/></div>
                         <div class="space-y-1 flex flex-col w-full">
                             <div class="flex w-full flex items-center pb-8">
                                 <div class="w-full h-3 mt-8">
@@ -45,7 +46,7 @@
                                     <td class="w-1/4 p-2">Status:</td>
                                     <td>{{ $candidate->status_type }}</td>
                                 </tr>
-                                @php($file = public_path().'/files/uploads/'.$candidate->email_id.'.pdf'))
+                                @php($file = public_path().'/files/uploads/'.$candidate->email_id.'.pdf')
                                 @if(file_exists($file))
                                 <tr>
                                     <td class="w-1/4 p-2">Životopis:</td>

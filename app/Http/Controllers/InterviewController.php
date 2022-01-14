@@ -30,7 +30,7 @@ class InterviewController extends Controller
                 ->join('candidates', 'users.email', '=', 'candidates.email_id')
                 ->where('jobs.company_id', '=', $id)
                 ->where('date', '<', date("Y-m-d"))
-                ->where('job_applications.status', '=', 'čekanje')
+                ->where('job_applications.status', '=', 'Čekanje')
                 ->orderby('date')
                 ->orderBy('time')
                 ->get();
@@ -50,7 +50,7 @@ class InterviewController extends Controller
                 ->orderby('date')
                 ->orderBy('time')
                 ->get();
-
+            
             return view('/company/calendar', compact(['before', 'after']));
         } else {
             $before = DB::table('interviews')
@@ -65,7 +65,7 @@ class InterviewController extends Controller
                 ->join('companies', 'jobs.company_id', '=', 'companies.company_id')
                 ->where('interviews.user_id', '=', Auth::user()->id)
                 ->where('date', '<', date("Y-m-d"))
-                ->where('job_applications.status', '=', 'čekanje')
+                ->where('job_applications.status', '=', 'Čekanje')
                 ->orderby('date')
                 ->orderBy('time')
                 ->get();

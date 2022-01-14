@@ -44,7 +44,7 @@
                                     <td class="w-1/4 p-2">Status:</td>
                                     <td>{{$user->status_type}}</td>
                                 </tr>
-                                @php($file = public_path().'/files/uploads/'.Auth::user()->email.'.pdf'))
+                                @php($file = public_path().'/files/uploads/'.Auth::user()->email.'.pdf')
                                 @if(file_exists($file))
                                 <tr>
                                     <td class="w-1/4 p-2">Životopis</td>
