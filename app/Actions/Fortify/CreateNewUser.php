@@ -2,6 +2,8 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\Candidate;
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -15,7 +17,7 @@ class CreateNewUser implements CreatesNewUsers
     /**
      * Validate and create a newly registered user.
      *
-     * @param  array  $input
+     * @param array $input
      * @return \App\Models\User
      */
     public function create(array $input)
@@ -27,10 +29,46 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
         ])->validate();
 
-        return User::create([
+        if ($input['accountType'] == 'company') {
+            $user = new User();
+            $user->email = $input['email'];
+            $user->is_company = true;
+            $user->password = Hash::make($input['password']);
+            $user->save();
+
+            $company = new Company();
+            $company->email_id = $input['email'];
+            $company->name = $input['name'];
+            $company->address = $input['addressCompany'];
+            $company->city = $input['cityCompany'];
+            $company->number_employees = $input['number_employees'];
+            $company->type = $input['type'];
+            $company->save();
+        }
+        if ($input['accountType'] == 'candidate') {
+            $user = new User();
+            $user->email = $input['email'];
+            $user->is_company = false;
+            $user->password = Hash::make($input['password']);
+            $user->save();
+
+            $candidate = new Candidate();
+            $candidate->name = $input['name'];
+            $candidate->surname = $input['surname'];
+            $candidate->address = $input['addressCandidate'];
+            $candidate->city = $input['cityCandidate'];
+            $candidate->mobile_number = $input['mobile_number'];
+            $candidate->status_type = $input['status_type'];
+            $candidate->OIB = $input['OIB'];
+            $candidate->email_id = $input['email'];
+            $candidate->save();
+        }
+
+        return $user;
+        /*return User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
-        ]);
+        ]);*/
     }
 }
