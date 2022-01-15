@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Candidate dashboard') }}
+            {{ __('Oglasi') }}
         </h2>
     </x-slot>
 
@@ -37,7 +37,7 @@
                             </div>
                         </div>
                     @empty
-                        <div>No records found</div>
+                        <div>Trenutno nema otvorenih oglasa.</div>
                     @endforelse
                 </div>
             </div>
