@@ -11,7 +11,7 @@
                 <div class="m-3">
                     <div class="flex">
                         <div class="mr-4 h-28 w-28">
-                        <img src="{{ asset('files/photos/'.Auth::user()->email.'.JPG') }}"
+                        <img src="{{ asset('files/photos/'.$candidate->email_id.'.JPG') }}"
                                 alt="slika"
                                 class="h-14 w-14 rounded-full"/></div>
                         <div class="space-y-1 flex flex-col w-full">
@@ -25,7 +25,7 @@
 
                             <table class="table-fixed text-lg space-y-12 w-10/12">
                                 <tbody class="divide-y divide-gray-300">
-                                    
+
                                 <tr>
                                     <td class="w-1/4 p-2">OIB:</td>
                                     <td>{{ $candidate->OIB }}</td>
@@ -50,7 +50,7 @@
                                 @if(file_exists($file))
                                 <tr>
                                     <td class="w-1/4 p-2">Životopis:</td>
-                                    <td><a href="{{ route('company.show_pdf',$candidate->email_id ) }}">životopis kandidata</a></td> 
+                                    <td><a href="{{ route('company.show_pdf',$candidate->email_id ) }}">životopis kandidata</a></td>
                                 </tr>
                                 @else
                                 <tr>
