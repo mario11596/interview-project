@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Job;
+use App\Models\JobApplication;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,9 +26,10 @@ class JobController extends Controller
         $job = Job::findOrFail($id);
 
         if (Auth::user()->is_company) {
-            return view('company.job-details', compact('job'));
+            return view('company.job-details', compact('job') );
         } else {
-            return view('candidate.job-details', compact('job'));
+            $application = JobApplication::where('user_id', Auth::id())->where('job_id', $id)->exists();
+            return view('candidate.job-details', compact(['job', 'application']));
         }
     }
 

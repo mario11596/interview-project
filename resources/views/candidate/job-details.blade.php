@@ -53,13 +53,23 @@
                         </div>
                     </div>
 
-                    <div class="mt-4 flex items-center justify-end">
-                        <div class="w-auto h-5">
-                            <a href="{{ route('candidate.create_application', [$job->job_id])}}">
-                            <x-jet-button class="hover:bg-blue-details w-auto"> PRIJAVI SE </x-jet-button>
-                            </a>
+                    @if(!$application)
+                        <div class="mt-4 flex items-center justify-end">
+                            <div class="w-auto h-5">
+                                <a href="{{ route('candidate.create_application', [$job->job_id])}}">
+                                    <x-jet-button class="hover:bg-blue-details w-auto"> PRIJAVI SE </x-jet-button>
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    @else
+                        <div class="mt-4 flex items-center justify-end">
+                            <div class="w-auto h-5">
+                                <a href="{{ route('candidate.index_applications', [$job->job_id])}}">
+                                    <x-jet-button class="hover:bg-blue-details w-auto"> PRIJAVE </x-jet-button>
+                                </a>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
