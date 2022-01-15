@@ -50,7 +50,7 @@ class InterviewController extends Controller
                 ->orderby('date')
                 ->orderBy('time')
                 ->get();
-            
+
             return view('/company/calendar', compact(['before', 'after']));
         } else {
             $before = DB::table('interviews')
@@ -88,15 +88,5 @@ class InterviewController extends Controller
 
             return view('/candidate/calendar', compact(['before', 'after']));
         }
-    }
-
-    public function delete($id)
-    {
-        $user = Candidate::where('email_id', Auth::user()->email)->value('candidate_id');
-        $interview = Interview::find($id)->value('user_id');
-        if ($user != $interview) {
-            abort(403);
-        }
-        Interview::where('interview_id', $id)->delete();
     }
 }
