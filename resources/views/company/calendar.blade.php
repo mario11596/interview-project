@@ -26,8 +26,8 @@
                                 <!-- Content that showing in the box -->
                                 <div class="flex-auto">
                                     <h1 class="text-lg">Za radno mjesto: {{$interview->position}}</h1>
-                                    <h1 class="text-xl font-bold">{{$interview->date}}
-                                        u {{$interview->time}} {{$interview->interview_type}}</h1>
+                                    <h1 class="text-xl font-bold">{{date('d.m.Y', strtotime($interview->date))}}
+                                        u {{date('H:i', strtotime($interview->time))}} {{$interview->interview_type}}</h1>
                                     <h3>{{$interview->name}} {{$interview->surname}}</h3>
                                 </div>
                                 <a href="#" class="text-center text-white hover:text-gray-300"></a>
@@ -56,8 +56,8 @@
                                 <!-- Content that showing in the box -->
                                 <div class="flex-auto">
                                     <h1 class="text-lg">Za radno mjesto: {{$interview->position}}</h1>
-                                    <h1 class="text-xl font-bold">{{$interview->date}}
-                                        u {{$interview->time}} {{$interview->interview_type}}</h1>
+                                    <h1 class="text-xl font-bold">{{date('d.m.Y', strtotime($interview->date))}}
+                                        u {{date('H:i', strtotime($interview->time))}} {{$interview->interview_type}}</h1>
                                     <h3>{{$interview->name}} {{$interview->surname}}</h3>
                                 </div>
 

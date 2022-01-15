@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Models\Job;
 use App\Models\JobApplication;
+use DateTime;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +25,8 @@ class JobController extends Controller
 
     public function details($id) {
         $job = Job::findOrFail($id);
+        $deadline = new DateTime($job->deadline);
+        $job->deadline = $deadline->format('d.m.Y.');
 
         if (Auth::user()->is_company) {
             return view('company.job-details', compact('job') );

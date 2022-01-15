@@ -41,7 +41,7 @@
                                 </tr>
                                 <tr>
                                     <td class="w-1/4 p-2">Rok trajanja oglasa:</td>
-                                    <td>{{$job->deadline}}</td>
+                                    <td>{{date('d.m.Y.', strtotime($job->deadline))}}</td>
                                 </tr>
                                 <tr>
                                     <td class="w-1/4 p-2">Uvjeti:</td>
