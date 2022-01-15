@@ -7,6 +7,7 @@ use App\Events\NewApplicationEvent;
 use App\Mail\MailContact;
 use App\Models\Candidate;
 use App\Models\Company;
+use App\Models\Interview;
 use App\Models\JobApplication;
 use App\Models\User;
 use App\Notifications\Acception;
@@ -57,7 +58,7 @@ class ApplicationsController extends Controller
         $application->save();
 
         event(new AcceptionEvent($application));
-       
+
         return redirect('company/applications');
     }
 
@@ -87,7 +88,9 @@ class ApplicationsController extends Controller
     }
 
     public function deleteCandidate($id) {
+        $job = JobApplication::where('user_id', Auth::id())->where('application_id', $id)->value('job_id');
         JobApplication::where('user_id', Auth::id())->where('application_id', $id)->delete();
+        Interview::where('user_id', Auth::id())->where('job_id', $job)->delete();
 
         return redirect('candidate/applications');
     }
