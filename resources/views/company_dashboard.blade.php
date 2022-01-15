@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight w-10/12">
-            {{ __('Company dashboard') }}
+            {{ __('Oglasi') }}
         </h2>
         <a href="{{ route('company.create_job')}}">
             <x-jet-button class="mr-3 hover:bg-green-new">+ Stvori novi oglas</x-jet-button>
@@ -37,14 +37,14 @@
                                         <x-jet-button class="mr-3 hover:bg-blue-details">Detalji</x-jet-button>
                                     </a>
                                     <a href="{{ route('company.delete_job', [$job->job_id]) }}"
-                                       onclick="return confirm('Are you sure?')">
+                                       onclick="return confirm('Jeste li sigurni?')">
                                         <x-jet-button class="mr-3 hover:bg-red-delete">Obriši</x-jet-button>
                                     </a>
                                 </div>
                             </div>
                         </div>
                     @empty
-                        <div>No records found</div>
+                        <div>Trenutno nemate otvorenih oglasa.</div>
                     @endforelse
                 </div>
             </div>
