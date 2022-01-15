@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Candidate;
 use App\Models\Company;
 use App\Models\Interview;
-use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -50,7 +49,7 @@ class InterviewController extends Controller
                 ->orderby('date')
                 ->orderBy('time')
                 ->get();
-            
+
             return view('/company/calendar', compact(['before', 'after']));
         } else {
             $before = DB::table('interviews')

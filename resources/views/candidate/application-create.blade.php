@@ -33,7 +33,7 @@
                         <select name="date" id="date" class="block mt-1 w-full bg-gray-100" onChange="dateSelected(this.value);" required>
                             <option value="" disabled selected>Odabir</option>
                             @foreach($times as $date => $time)
-                                <option value="{{$date}}">{{$date}}</option>
+                                <option value="{{$date}}">{{date('d.m.Y', strtotime($date))}}</option>
                             @endforeach
                         </select>
                     </div>
