@@ -54,12 +54,12 @@
                     <div class="mb-4 flex justify-center">
                         <x-jet-button type="submit" class="hover:bg-green-new"> SPREMI</x-jet-button>
                     </div>
-                    <div class="flex justify-center">
-                        <a href="{{ route('candidate.job_details', [$id]) }}">
-                            <x-jet-button class="hover:bg-red-delete"> ODUSTANI</x-jet-button>
-                        </a>
-                    </div>
                 </form>
+                <div class="flex justify-center">
+                    <a href="{{url()->previous()}}">
+                        <x-jet-button class="hover:bg-red-delete"> ODUSTANI</x-jet-button>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
