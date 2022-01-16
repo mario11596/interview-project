@@ -8,13 +8,14 @@
 
     <div class="py-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            @include('alert')
             <form action="{{ route('candidate.search') }}" method="GET" role="search">
                 <input type="text" style="border-radius: 10px;" placeholder="Pretraži..." name="search" required/>
-                    <button type="submit" class="btn btn-primary">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" type="submit">
+                    <x-jet-button type="submit" class="hover:bg-green-new">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" type="submit">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                         </svg>
-                    </button>
+                    </x-jet-button>
             </form>
             <br>
 
@@ -40,6 +41,9 @@
                         <div>Trenutno nema otvorenih oglasa.</div>
                     @endforelse
                 </div>
+                <div class="items-center">
+                {{isset($search)? $jobs->appends(['search'=> $search])->links() : $jobs->links()}}    
+                </div>  
             </div>
         </div>
     </div>

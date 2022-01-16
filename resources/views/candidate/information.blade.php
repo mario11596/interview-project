@@ -8,6 +8,7 @@
     <div class="py-5">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex justify-center">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg w-3/4 p-5">
+                @include('alert')
                 <div class="m-3">
                     <div class="flex">
                         <div class="mr-4 h-28 w-28">
@@ -54,7 +55,7 @@
                                 @else
                                 <tr>
                                     <td class="w-1/4 p-2">Životopis</td>
-                                    <td></td>
+                                    <td style="color:red">Niste priložili životopis!</td>
                                 </tr>
                                 @endif
                                 </tbody>

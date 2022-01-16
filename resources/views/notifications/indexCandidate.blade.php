@@ -19,11 +19,19 @@
                     @foreach($notifications as $notification)
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12">
+                            @if($notification->data['status'] == 'Prihvaćeno')
                             <div class="alert alert-success" role="alert">
                             {{ $notification->created_at->diffForhumans() }} </br>
                                 Prijava za poziciju {{ $notification->data['position'] }} tvrtke {{ $notification->data['company'] }} u gradu {{ $notification->data['city'] }} ima status {{ $notification->data['status'] }}!
                                 <a href="{{ route('candidate.notificationMarkOne', $notification->id) }}" class="flex justify-end">Označi kao pročitano</a>   
                             </div>
+                            @else
+                            <div class="alert alert-danger" role="alert">
+                            {{ $notification->created_at->diffForhumans() }} </br>
+                                Prijava za poziciju {{ $notification->data['position'] }} tvrtke {{ $notification->data['company'] }} u gradu {{ $notification->data['city'] }} ima status {{ $notification->data['status'] }}!
+                                <a href="{{ route('candidate.notificationMarkOne', $notification->id) }}" class="flex justify-end">Označi kao pročitano</a>   
+                            </div>
+                            @endif
                         </div>
                     </div>
                     @endforeach
