@@ -26,7 +26,7 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="grid grid-cols-3 gap-4 flex flex-wrap justify-start m-3">
                     @forelse($jobs as $job)
-                        <div class="flex p-5 space-x-4 items-center shadow-md max-w-sm rounded-md">
+                        <div class="flex p-5 space-x-4 items-center shadow-md max-w-sm rounded-md"  style="background-color: #eaf5fa;">
                             <img src="{{ asset('files/photos/'.Auth::user()->email.'.JPG') }}"
                                 alt="slika"
                                 class="h-14 w-14 rounded-full"/>
