@@ -53,23 +53,23 @@
                         </div>
                     </div>
 
-                    @if(!$application)
-                        <div class="mt-4 flex items-center justify-end">
-                            <div class="w-auto h-5">
+                    <div class="mt-4 flex px-2 items-center justify-end">
+                        <div class="w-auto h-5">
+                            <a href="{{ route('candidate.show_company', [$job->job_id])}}">
+                                <x-jet-button class="hover:bg-blue-details w-auto"> Detalji tvrtke </x-jet-button>
+                            </a>
+                            @if(!$application)
                                 <a href="{{ route('candidate.create_application', [$job->job_id])}}">
                                     <x-jet-button class="hover:bg-blue-details w-auto"> PRIJAVI SE </x-jet-button>
                                 </a>
-                            </div>
-                        </div>
-                    @else
-                        <div class="mt-4 flex items-center justify-end">
-                            <div class="w-auto h-5">
+                            @else
                                 <a href="{{ route('candidate.index_applications', [$job->job_id])}}">
                                     <x-jet-button class="hover:bg-blue-details w-auto"> PRIJAVE </x-jet-button>
                                 </a>
-                            </div>
+                            @endif
                         </div>
-                    @endif
+                    </div>
+
                 </div>
             </div>
         </div>

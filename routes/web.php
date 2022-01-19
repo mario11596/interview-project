@@ -63,6 +63,7 @@ Route::group(['prefix' => 'candidate','as' => 'candidate.', 'middleware' => ['au
     Route::get('dashboard/{id}', [JobController::class, 'details'])->name('job_details');
     Route::get('dashboard/{id}/apply', [ApplicationsController::class, 'create'])->name('create_application');
     Route::post('dashboard/{id}/store', [ApplicationsController::class, 'store'])->name('store_application');
+    Route::get('dashboard/{id}/company', [InformationController::class, 'showCompany'])->name('show_company');
     Route::get('search', [JobController::class, 'searchCandidate'])->name('search');
 
     Route::get('information', [InformationController::class, 'index'])->name('index_information');

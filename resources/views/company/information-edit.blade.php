@@ -17,6 +17,11 @@
                                      required/>
                     </div>
                     <div class="mb-4">
+                        <x-jet-label for="description" value="Opis"/>
+                        <textarea id="description" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 bg-gray-100 w-full"
+                                  name="description">{{$company->description}}</textarea>
+                    </div>
+                    <div class="mb-4">
                         <x-jet-label for="address" value="Adresa"/>
                         <x-jet-input id="address" class="block mt-1 w-full bg-gray-100" type="text" name="address"
                                      value="{{$company->address}}"

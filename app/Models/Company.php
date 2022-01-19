@@ -18,6 +18,7 @@ class Company extends Model
         'city',
         'number_employees',
         'type',
+        'description',
     ];
 
     public function job(){
