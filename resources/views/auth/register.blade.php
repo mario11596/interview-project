@@ -28,7 +28,7 @@
             @csrf
 
             <div>
-                <x-jet-label for="name" value="{{ __('Name') }}"/>
+                <x-jet-label for="name" value="{{ __('Ime') }}"/>
                 <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required
                              autofocus autocomplete="name"/>
             </div>
@@ -40,29 +40,29 @@
             </div>
 
             <div class="mt-4">
-                <x-jet-label for="password" value="{{ __('Password') }}"/>
+                <x-jet-label for="password" value="{{ __('Lozinka') }}"/>
                 <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required
                              autocomplete="new-password"/>
             </div>
 
             <div class="mt-4">
-                <x-jet-label for="password_confirmation" value="{{ __('Confirm Password') }}"/>
+                <x-jet-label for="password_confirmation" value="{{ __('Potvrda lozinke') }}"/>
                 <x-jet-input id="password_confirmation" class="block mt-1 w-full" type="password"
                              name="password_confirmation" required autocomplete="new-password"/>
             </div>
 
             <div class="mt-4">
-                <span class="text-gray-700">Account Type</span>
+                <span class="text-gray-700">Vrsta korisničkog računa</span>
                 <div class="mt-2">
                     <label class="inline-flex items-center">
                         <input type="radio" class="form-radio" name="accountType" value='candidate' id="is_candidate"
                                onchange="radioChecked()">
-                        <span class="ml-2">Personal</span>
+                        <span class="ml-2">Privatni</span>
                     </label>
                     <label class="inline-flex items-center ml-6">
                         <input type="radio" class="form-radio" name="accountType" value='company' id="is_company"
                                onchange="radioChecked()">
-                        <span class="ml-2">Business</span>
+                        <span class="ml-2">Poslovni</span>
                     </label>
                 </div>
             </div>

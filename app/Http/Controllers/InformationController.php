@@ -69,7 +69,7 @@ class InformationController extends Controller
 
         $company->save();
 
-        return redirect('/company/information')->with('info', 'Uspješno su ažurirani podaci');
+        return redirect('/company/information')->with('success', 'Uspješno su ažurirani podaci!');
     }
 
 
@@ -125,7 +125,7 @@ class InformationController extends Controller
 
         $candidate->save();
 
-        return redirect('/candidate/information')->with('info', 'Uspješno su ažurirani podaci');
+        return redirect('/candidate/information')->with('success', 'Uspješno su ažurirani podaci!');
     }
 
 
@@ -137,7 +137,7 @@ class InformationController extends Controller
             File::delete(public_path('/files/uploads/'.$id.'.pdf'));
         }
         
-        return redirect('/candidate/information');
+        return redirect('/candidate/information')->with('success', 'Uspješno je obrisan PDF dokument!');
     }
 
 

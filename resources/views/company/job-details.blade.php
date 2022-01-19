@@ -8,11 +8,12 @@
     <div class="py-5">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex justify-center">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg w-3/4 p-5">
+            @include('alert')
                 <div class="m-3">
                     <div class="flex">
                         <div class="mr-4 h-28 w-28">
-                            <img src="https://stemgames.hr/wp-content/uploads/2017/12/riteh.gif" alt="image"
-                                 class="rounded-full"/></div>
+                            <img src="{{ asset('files/photos/'.Auth::user()->email.'.JPG') }}" class="rounded-full"/>
+                        </div>
                         <div class="space-y-1 flex flex-col w-full">
                             <div class="flex w-full flex items-center pb-8">
                                 <div class="w-full h-3 mt-8">

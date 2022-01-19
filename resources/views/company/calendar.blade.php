@@ -33,7 +33,7 @@
                                 <a href="#" class="text-center text-white hover:text-gray-300"></a>
                             </div>
                         @empty
-                            <div>No records found</div>
+                            <div>Nema proteklih razgovora</div>
                         @endforelse
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                                 </a>
                             </div>
                         @empty
-                            <div>No records found</div>
+                            <div>Nema nadolazećih razgovora</div>
                         @endforelse
                     </div>
                 </div>

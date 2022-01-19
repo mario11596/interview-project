@@ -47,11 +47,12 @@ class JobController extends Controller
     }
 
     public function edit($id) {
+        
 
         $job = Job::find($id);
-        $company = Company::find($job->company_id)->value('email_id');
-
-        if ($company != Auth::user()->email) {
+        $company = Company::find($job->company_id)->first();
+        
+        if ($company->email_id != Auth::user()->email) {
             return redirect("/company/dashboard/{$id}");
         }
         return view('company.job-edit', compact('job'));
@@ -82,7 +83,7 @@ class JobController extends Controller
 
         $job->save();
 
-        return redirect("/company/dashboard/{$id}")->with('info', 'Uspješno su ažurirani podaci');
+        return redirect("/company/dashboard/{$id}")->with('success', 'Uspješno je ažuriran oglas za posao!');
     }
 
     public function delete($id) {
@@ -111,7 +112,7 @@ class JobController extends Controller
         if(count($jobs) > 0){
             return view('candidate_dashboard', compact('jobs','search'));
         } else {
-            return redirect('candidate_dashboard')->with('warning', 'Nema tražene pozicije!');
+            return redirect('/candidate/dashboard')->with('warning', 'Nema tražene pozicije!');
         }
     }
 
@@ -130,7 +131,7 @@ class JobController extends Controller
         if(count($jobs) > 0){
             return view('company_dashboard', compact('jobs','search'));
         } else {
-            return redirect('company_dashboard')->with('warning', 'Nema tražene pozicije!');
+            return redirect('/company/dashboard')->with('warning', 'Nema tražene pozicije!');
         }
     }
 }
