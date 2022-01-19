@@ -64,7 +64,7 @@ Route::group(['prefix' => 'candidate','as' => 'candidate.', 'middleware' => ['au
     Route::get('dashboard/{id}/apply', [ApplicationsController::class, 'create'])->name('create_application');
     Route::post('dashboard/{id}/store', [ApplicationsController::class, 'store'])->name('store_application');
     Route::get('search', [JobController::class, 'searchCandidate'])->name('search');
-    
+
     Route::get('information', [InformationController::class, 'index'])->name('index_information');
     Route::get('information/{id}/edit', [InformationController::class, 'editCandidate'])->name('edit_information');
     Route::get('information/delete/photo/{id}', [InformationController::class, 'destroyPhoto'])->name('destroy_photo');

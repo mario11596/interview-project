@@ -58,6 +58,10 @@
                                     <td style="color:red">Kandidat nije priložio!</td>
                                 </tr>
                                 @endif
+                                <tr>
+                                    <td class="w-1/4 p-2">Motivacijsko pismo:</td>
+                                    <td>{{ $message }}</td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
