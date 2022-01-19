@@ -61,7 +61,7 @@
                                     <h3>{{$interview->name}} {{$interview->surname}}</h3>
                                 </div>
 
-                                <a href="{{ route('company.show_applications', $interview->user_id) }}"
+                                <a href="{{ route('company.show_applications', $interview->application_id) }}"
                                    class="text-center text-white hover:text-gray-300"> Informacije o kandidatu
                                 </a>
                             </div>

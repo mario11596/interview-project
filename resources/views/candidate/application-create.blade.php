@@ -29,6 +29,11 @@
                 <form method="POST" action="{{route('candidate.store_application', [$id])}}">
                     {{ csrf_field() }}
                     <div class="mb-4">
+                        <x-jet-label for="message" value="{{ __('Motivacijsko pismo') }}"/>
+                        <textarea id="message" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 bg-gray-100 w-full"
+                                  name="message" required></textarea>
+                    </div>
+                    <div class="mb-4">
                         <x-jet-label for="date" value="{{ __('Datum intervjua') }}"/>
                         <select name="date" id="date" class="block mt-1 w-full bg-gray-100" onChange="dateSelected(this.value);" required>
                             <option value="" disabled selected>Odabir</option>

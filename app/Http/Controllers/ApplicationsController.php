@@ -8,6 +8,7 @@ use App\Mail\MailContact;
 use App\Models\Candidate;
 use App\Models\Company;
 use App\Models\Interview;
+use App\Models\Job;
 use App\Models\JobApplication;
 use App\Models\User;
 use App\Notifications\Acception;
@@ -74,7 +75,12 @@ class ApplicationsController extends Controller
 
     public function store(Request $request, $id) {
         $user_id = Auth::user()->id;
-        $jobApplicaton = JobApplication::create(['user_id' => $user_id, 'job_id' => $id, 'status' => "Čekanje"]);
+        $jobApplicaton = JobApplication::create([
+            'user_id' => $user_id,
+            'job_id' => $id,
+            'message' => $request->message,
+            'status' => "Čekanje"
+        ]);
         $this->interviewService->store($request, $id);
 
         event(new NewApplicationEvent($jobApplicaton));
@@ -134,10 +140,13 @@ class ApplicationsController extends Controller
     }
 
     public function showCandidate($id){
-        $user_check = User::where('id', $id)->value('email');
-        $candidate = Candidate::where('email_id',$user_check)->first();
+        $user_id = JobApplication::where('application_id', $id)->value('user_id');
+        $job_id = JobApplication::where('application_id', $id)->value('job_id');
+        $user_check = User::where('id', $user_id)->value('email');
+        $candidate = Candidate::where('email_id', $user_check)->first();
+        $message = JobApplication::where('application_id', $id)->value('message');
 
-        return view('company.applications-show', compact('candidate'));
+        return view('company.applications-show', compact(['candidate', 'message']));
     }
 
 
