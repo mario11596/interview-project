@@ -23,6 +23,10 @@
                             <table class="table-fixed text-lg space-y-12 w-10/12">
                                 <tbody class="divide-y divide-gray-400">
                                 <tr>
+                                    <td class="w-1/4 p-2">Opis:</td>
+                                    <td>{{$company->description}}</td>
+                                </tr>
+                                <tr>
                                     <td class="w-1/4 p-2">Grad:</td>
                                     <td>{{$company->city}}</td>
                                 </tr>
