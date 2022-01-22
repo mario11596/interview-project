@@ -18,7 +18,7 @@ class JobController extends Controller
             $jobs = Job::where('company_id', $id)->paginate($request->input('count', 10));
             return view('company_dashboard', compact('jobs'));
         } else {
-            $jobs = Job::paginate($request->input('count', 10));
+            $jobs = Job::paginate($request->input('count', 9));
             return view('candidate_dashboard', compact('jobs'));
         }
     }
@@ -47,11 +47,11 @@ class JobController extends Controller
     }
 
     public function edit($id) {
-        
+
 
         $job = Job::find($id);
         $company = Company::find($job->company_id)->first();
-        
+
         if ($company->email_id != Auth::user()->email) {
             return redirect("/company/dashboard/{$id}");
         }

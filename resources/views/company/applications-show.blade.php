@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight w-10/12">
-            {{ __('Detaljne informacije') }}
+            {{ __('Informacije o kandidatu') }}
         </h2>
     </x-slot>
 
