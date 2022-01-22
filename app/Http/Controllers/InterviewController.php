@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Candidate;
 use App\Models\Company;
 use App\Models\Interview;
-use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -30,7 +29,7 @@ class InterviewController extends Controller
                 ->join('candidates', 'users.email', '=', 'candidates.email_id')
                 ->where('jobs.company_id', '=', $id)
                 ->where('date', '<', date("Y-m-d"))
-                ->where('job_applications.status', '=', 'čekanje')
+                ->where('job_applications.status', '=', 'Čekanje')
                 ->orderby('date')
                 ->orderBy('time')
                 ->get();
@@ -65,7 +64,7 @@ class InterviewController extends Controller
                 ->join('companies', 'jobs.company_id', '=', 'companies.company_id')
                 ->where('interviews.user_id', '=', Auth::user()->id)
                 ->where('date', '<', date("Y-m-d"))
-                ->where('job_applications.status', '=', 'čekanje')
+                ->where('job_applications.status', '=', 'Čekanje')
                 ->orderby('date')
                 ->orderBy('time')
                 ->get();
@@ -88,15 +87,5 @@ class InterviewController extends Controller
 
             return view('/candidate/calendar', compact(['before', 'after']));
         }
-    }
-
-    public function delete($id)
-    {
-        $user = Candidate::where('email_id', Auth::user()->email)->value('candidate_id');
-        $interview = Interview::find($id)->value('user_id');
-        if ($user != $interview) {
-            abort(403);
-        }
-        Interview::where('interview_id', $id)->delete();
     }
 }

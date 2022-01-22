@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Candidate;
 use App\Models\Company;
+use App\Models\Job;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,12 +53,12 @@ class InformationController extends Controller
             'type' => 'required',
             "photo" => "required_without_all:name,address,city,number_employees,type|mimes:jpg"
         ]);
-        
+
         if($request->file('photo')){
             $file = $request->file('photo');
-            $fileName = Auth::user()->email.'.'.$file->getClientOriginalExtension(); 
+            $fileName = Auth::user()->email.'.'.$file->getClientOriginalExtension();
             $filePath = public_path() . '/files/photos/';
-            $file->move($filePath, $fileName); 
+            $file->move($filePath, $fileName);
         }
 
         $company->name = $request['name'];
@@ -65,11 +66,12 @@ class InformationController extends Controller
         $company->city = $request['city'];
         $company->number_employees = $request['number_employees'];
         $company->type = $request['type'];
+        $company->description = $request['description'];
         $company->email_id = Auth::user()->email;
 
         $company->save();
 
-        return redirect('/company/information')->with('info', 'Uspješno su ažurirani podaci');
+        return redirect('/company/information')->with('success', 'Uspješno su ažurirani podaci!');
     }
 
 
@@ -96,22 +98,22 @@ class InformationController extends Controller
             'city' => 'required',
             'mobile_number' => 'required',
             'status_type' => 'required',
-            'OIB' => 'required', 
+            'OIB' => 'required',
             "file" => "required_without_all:name,surname,address,city,mobile_number,status_type,OIB|mimes:pdf|max:10000",
             "photo" => "required_without_all:name,surname,address,city,mobile_number,status_type,OIB,file|mimes:jpg"
         ]);
         if($request->file('file')){
             $file = $request->file('file');
-            $fileName = Auth::user()->email.'.'.$file->getClientOriginalExtension(); 
+            $fileName = Auth::user()->email.'.'.$file->getClientOriginalExtension();
             $filePath = public_path() . '/files/uploads/';
-            $file->move($filePath, $fileName); 
+            $file->move($filePath, $fileName);
         }
        // dd($request->file('photo'));
         if($request->file('photo')){
             $file = $request->file('photo');
-            $fileName = Auth::user()->email.'.'.$file->getClientOriginalExtension(); 
+            $fileName = Auth::user()->email.'.'.$file->getClientOriginalExtension();
             $filePath = public_path() . '/files/photos/';
-            $file->move($filePath, $fileName); 
+            $file->move($filePath, $fileName);
         }
 
         $candidate->name = $request['name'];
@@ -125,19 +127,19 @@ class InformationController extends Controller
 
         $candidate->save();
 
-        return redirect('/candidate/information')->with('info', 'Uspješno su ažurirani podaci');
+        return redirect('/candidate/information')->with('success', 'Uspješno su ažurirani podaci!');
     }
 
 
     public function destroyPDF($id) {
         $pathToFile = public_path().'/files/uploads/'.$id.'.pdf';
-        
-      
+
+
         if (File::exists($pathToFile)) {
             File::delete(public_path('/files/uploads/'.$id.'.pdf'));
         }
-        
-        return redirect('/candidate/information');
+
+        return redirect('/candidate/information')->with('success', 'Uspješno je obrisan PDF dokument!');
     }
 
 
@@ -156,7 +158,7 @@ class InformationController extends Controller
 
     public function destroyPhoto($id) {
         $pathToFile = public_path().'/files/photos/'.$id.'.JPG';
-        
+
         if (File::exists($pathToFile)) {
             File::delete(public_path('/files/photos/'.$id.'.JPG'));
         }
@@ -165,5 +167,11 @@ class InformationController extends Controller
         } else {
             return redirect('/candidate/information');
         }
+    }
+
+    public function showCompany($id) {
+        $company_id = Job::findOrFail($id)->value('company_id');
+        $company = Company::findOrFail($company_id);
+        return view('candidate.company-show', compact('company'));
     }
 }

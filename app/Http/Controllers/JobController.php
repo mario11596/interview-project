@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Job;
+use App\Models\JobApplication;
+use DateTime;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,21 +15,24 @@ class JobController extends Controller
     public function index(Request $request) {
         if (Auth::user()->is_company) {
             $id = Company::where('email_id', Auth::user()->email)->value('company_id');
-            $jobs = Job::where('company_id', $id)->paginate($request->input('count', 10));
+            $jobs = Job::where('company_id', $id)->paginate($request->input('count', 9));
             return view('company_dashboard', compact('jobs'));
         } else {
-            $jobs = Job::paginate($request->input('count', 10));
+            $jobs = Job::paginate($request->input('count', 9));
             return view('candidate_dashboard', compact('jobs'));
         }
     }
 
     public function details($id) {
         $job = Job::findOrFail($id);
+        $deadline = new DateTime($job->deadline);
+        $job->deadline = $deadline->format('d.m.Y.');
 
         if (Auth::user()->is_company) {
-            return view('company.job-details', compact('job'));
+            return view('company.job-details', compact('job') );
         } else {
-            return view('candidate.job-details', compact('job'));
+            $application = JobApplication::where('user_id', Auth::id())->where('job_id', $id)->exists();
+            return view('candidate.job-details', compact(['job', 'application']));
         }
     }
 
@@ -43,10 +48,11 @@ class JobController extends Controller
 
     public function edit($id) {
 
-        $job = Job::find($id);
-        $company = Company::find($job->company_id)->value('email_id');
 
-        if ($company != Auth::user()->email) {
+        $job = Job::find($id);
+        $company = Company::find($job->company_id);
+
+        if ($company->email_id != Auth::user()->email) {
             return redirect("/company/dashboard/{$id}");
         }
         return view('company.job-edit', compact('job'));
@@ -77,7 +83,7 @@ class JobController extends Controller
 
         $job->save();
 
-        return redirect("/company/dashboard/{$id}")->with('info', 'Uspješno su ažurirani podaci');
+        return redirect("/company/dashboard/{$id}")->with('success', 'Uspješno je ažuriran oglas za posao!');
     }
 
     public function delete($id) {
@@ -101,12 +107,12 @@ class JobController extends Controller
                 $builder->where('position', 'LIKE', "%{$search}%");
             })
             ->orderBy('job_id')
-            ->get();
+            ->paginate(9);
 
         if(count($jobs) > 0){
             return view('candidate_dashboard', compact('jobs','search'));
         } else {
-            return redirect('candidate_dashboard')->with('warning', 'Nema tražene pozicije!');
+            return redirect('/candidate/dashboard')->with('warning', 'Nema tražene pozicije!');
         }
     }
 
@@ -120,12 +126,12 @@ class JobController extends Controller
                 $builder->where('position', 'LIKE', "%{$search}%");
             })
             ->orderBy('job_id')
-            ->get();
+            ->paginate(9);
 
         if(count($jobs) > 0){
             return view('company_dashboard', compact('jobs','search'));
         } else {
-            return redirect('company_dashboard')->with('warning', 'Nema tražene pozicije!');
+            return redirect('/company/dashboard')->with('warning', 'Nema tražene pozicije!');
         }
     }
 }

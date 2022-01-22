@@ -7,6 +7,8 @@ use App\Events\NewApplicationEvent;
 use App\Mail\MailContact;
 use App\Models\Candidate;
 use App\Models\Company;
+use App\Models\Interview;
+use App\Models\Job;
 use App\Models\JobApplication;
 use App\Models\User;
 use App\Notifications\Acception;
@@ -57,8 +59,8 @@ class ApplicationsController extends Controller
         $application->save();
 
         event(new AcceptionEvent($application));
-       
-        return redirect('company/applications');
+
+        return redirect('company/applications')->with('info', 'Uspješno zabilježena promjena statusa kandidata!');
     }
 
     public function jobsReject($id) {
@@ -68,12 +70,17 @@ class ApplicationsController extends Controller
 
         event(new AcceptionEvent($application));
 
-        return redirect('company/applications');
+        return redirect('company/applications')->with('info', 'Uspješno zabilježena promjena statusa kandidata!');
     }
 
     public function store(Request $request, $id) {
         $user_id = Auth::user()->id;
-        $jobApplicaton = JobApplication::create(['user_id' => $user_id, 'job_id' => $id, 'status' => "w"]);
+        $jobApplicaton = JobApplication::create([
+            'user_id' => $user_id,
+            'job_id' => $id,
+            'message' => $request->message,
+            'status' => "Čekanje"
+        ]);
         $this->interviewService->store($request, $id);
 
         event(new NewApplicationEvent($jobApplicaton));
@@ -87,9 +94,11 @@ class ApplicationsController extends Controller
     }
 
     public function deleteCandidate($id) {
+        $job = JobApplication::where('user_id', Auth::id())->where('application_id', $id)->value('job_id');
         JobApplication::where('user_id', Auth::id())->where('application_id', $id)->delete();
+        Interview::where('user_id', Auth::id())->where('job_id', $job)->delete();
 
-        return redirect('candidate/applications');
+        return redirect('candidate/applications')->with('success', 'Uspješno ste se odjavili za prijavu za posao!');
     }
 
     public function email($id){
@@ -123,18 +132,21 @@ class ApplicationsController extends Controller
        Mail::to($userTo_email)->send(new MailContact($request));
        //return redirect('candidate.applications/email');
        if(Auth::user()->is_company){
-        return redirect('company/applications');
+        return redirect('company/applications')->with('success', 'Uspješno poslan e-mail!');
     } else {
-        return redirect('candidate/applications');
+        return redirect('candidate/applications')->with('success', 'Uspješno poslan e-mail!');
     }
        //return response()->json(['message' => 'Request completed']);
     }
 
     public function showCandidate($id){
-        $user_check = User::where('id', $id)->value('email');
-        $candidate = Candidate::where('email_id',$user_check)->first();
+        $user_id = JobApplication::where('application_id', $id)->value('user_id');
+        $job_id = JobApplication::where('application_id', $id)->value('job_id');
+        $user_check = User::where('id', $user_id)->value('email');
+        $candidate = Candidate::where('email_id', $user_check)->first();
+        $message = JobApplication::where('application_id', $id)->value('message');
 
-        return view('company.applications-show', compact('candidate'));
+        return view('company.applications-show', compact(['candidate', 'message']));
     }
 
 

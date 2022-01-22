@@ -12,7 +12,8 @@
                     {{ csrf_field() }}
                     <div class="mb-4">
                         <x-jet-label for="description" value="Opis"/>
-                        <x-jet-input id="description" class="block mt-1 w-full bg-gray-100" type="text" name="description"
+                        <x-jet-input id="description" class="block mt-1 w-full bg-gray-100" type="text"
+                                     name="description"
                                      value="{{$job->description}}"
                                      required/>
                     </div>
@@ -46,14 +47,25 @@
                                      required/>
                     </div>
                     <div class="flex justify-center">
-                        <x-jet-button type="submit" name="submit" value="submit" class="hover:bg-green-new">SPREMI</x-jet-button>
+                        <x-jet-button type="submit" name="submit" value="submit" class="hover:bg-green-new mr-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-check2 mr-1" viewBox="0 0 16 16">
+                                <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                            </svg>
+                            SPREMI
+                        </x-jet-button>
+                        <a href="{{ route('company.index_information') }}">
+                            <x-jet-button type="button" class="hover:bg-red-delete">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-x-lg mr-1" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
+                                    <path fill-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
+                                </svg>
+                                ODUSTANI
+                            </x-jet-button>
+                        </a>
                     </div>
                 </form>
-                <div class="flex justify-center">
-                    <a href="{{ route('company.index_information') }}">
-                        <x-jet-button class="hover:bg-red-delete"> ODUSTANI</x-jet-button>
-                    </a>
-                </div>
             </div>
         </div>
     </div>
