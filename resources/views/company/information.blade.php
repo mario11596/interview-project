@@ -13,7 +13,8 @@
                 <div class="m-3">
                     <div class="flex">
                         <div class="mr-4 h-28 w-28">
-                            <img src="{{ asset('files/photos/'.Auth::user()->email.'.JPG') }}" class="rounded-full"/></div>
+                            <img src="{{ asset('files/photos/'.Auth::user()->email.'.JPG') }}" class="rounded-full"/>
+                        </div>
                         <div class="space-y-1 flex flex-col w-full">
                             <div class="flex w-full flex items-center pb-8">
                                 <div class="w-full h-3 mt-8">
@@ -53,7 +54,14 @@
                     <div class="mt-4 flex items-center justify-end">
                         <div class="w-auto h-5">
                             <a href="{{ route('company.edit_information', $user->company_id)}}">
-                            <x-jet-button class="hover:bg-blue-details w-auto"> UREDI PODATKE </x-jet-button>
+                                <x-jet-button class="hover:bg-blue-details w-auto">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-pencil-square mr-1" viewBox="0 0 16 16">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                    </svg>
+                                    UREDI PODATKE
+                                </x-jet-button>
                             </a>
                         </div>
                     </div>
