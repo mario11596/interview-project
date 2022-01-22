@@ -50,7 +50,7 @@
                                 @if(file_exists($file))
                                     <tr>
                                         <td class="w-1/4 p-2">Životopis</td>
-                                        <td><a href="{{ route('candidate.show_pdf', Auth::user()->email) }}" class="underline">Moj
+                                        <td><a target="blank" href="{{ route('candidate.show_pdf', Auth::user()->email) }}" class="underline">Moj
                                                 životopis</a></td>
                                         <td><a href="{{ route('candidate.destroy_pdf',Auth::user()->email) }}"
                                                onclick="return confirm('Jeste li sigurni da želite izbrisati PDF dokument?');">

@@ -9,7 +9,7 @@
     <div class="py-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @include('alert')
-            <form action="{{ route('company.search') }}" method="GET" role="search" class="flex items-end">
+            <form action="{{ route('candidate.search') }}" method="GET" role="search" class="flex items-end">
                 <input type="text" style="border-radius: 10px;" class="focus:border-blue" placeholder="Pretraži..." name="search" required/>
                 <x-jet-button type="submit" class="hover:bg-blue-details ml-1 ">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"

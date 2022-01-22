@@ -15,7 +15,7 @@ class JobController extends Controller
     public function index(Request $request) {
         if (Auth::user()->is_company) {
             $id = Company::where('email_id', Auth::user()->email)->value('company_id');
-            $jobs = Job::where('company_id', $id)->paginate($request->input('count', 10));
+            $jobs = Job::where('company_id', $id)->paginate($request->input('count', 9));
             return view('company_dashboard', compact('jobs'));
         } else {
             $jobs = Job::paginate($request->input('count', 9));
@@ -50,7 +50,7 @@ class JobController extends Controller
 
 
         $job = Job::find($id);
-        $company = Company::find($job->company_id)->first();
+        $company = Company::find($job->company_id);
 
         if ($company->email_id != Auth::user()->email) {
             return redirect("/company/dashboard/{$id}");
@@ -107,7 +107,7 @@ class JobController extends Controller
                 $builder->where('position', 'LIKE', "%{$search}%");
             })
             ->orderBy('job_id')
-            ->get();
+            ->paginate(9);
 
         if(count($jobs) > 0){
             return view('candidate_dashboard', compact('jobs','search'));
@@ -126,7 +126,7 @@ class JobController extends Controller
                 $builder->where('position', 'LIKE', "%{$search}%");
             })
             ->orderBy('job_id')
-            ->get();
+            ->paginate(9);
 
         if(count($jobs) > 0){
             return view('company_dashboard', compact('jobs','search'));

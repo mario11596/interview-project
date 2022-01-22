@@ -56,7 +56,7 @@
 
                     <div class="mt-4 flex items-center justify-end">
                         <div class="w-auto h-5">
-                            <a href="{{ route('company.edit_job', [$job->job_id])}}">
+                            <a href="{{ route('company.edit_job', $job->job_id)}}">
                                 <x-jet-button class="hover:bg-blue-details w-auto">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                          class="bi bi-pencil-square mr-1" viewBox="0 0 16 16">
