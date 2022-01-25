@@ -170,8 +170,8 @@ class InformationController extends Controller
     }
 
     public function showCompany($id) {
-        $company_id = Job::findOrFail($id)->value('company_id');
-        $company = Company::findOrFail($company_id);
+        $company_id = Job::where('job_id', $id)->value('company_id');
+        $company = Company::where('company_id', $company_id)->first();
         return view('candidate.company-show', compact('company'));
     }
 }
