@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class InterviewService {
-    //Nemam pojma što ovdje radim
+    
     public function getTimes($job_id) {
         $company = Job::find($job_id)->value('company_id');
         $deadline = Job::find($job_id)->value('deadline');

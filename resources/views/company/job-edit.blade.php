@@ -12,16 +12,21 @@
                     {{ csrf_field() }}
                     <div class="mb-4">
                         <x-jet-label for="description" value="Opis"/>
-                        <x-jet-input id="description" class="block mt-1 w-full bg-gray-100" type="text"
+                        <textarea id="description" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 bg-gray-100 w-full" type="text"
                                      name="description"
-                                     value="{{$job->description}}"
-                                     required/>
+                                     required/>{{$job->description}}</textarea>
                     </div>
                     <div class="mb-4">
                         <x-jet-label for="position" value="Radno mjesto"/>
                         <x-jet-input id="position" class="block mt-1 w-full bg-gray-100" type="text" name="position"
                                      value="{{$job->position}}"
                                      required/>
+                    </div>
+
+                    <div class="mb-4">
+                        <x-jet-label for="conditions" value="Uvjeti"/>
+                        <textarea id="conditions" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 bg-gray-100 w-full" type="text" name="conditions"
+                                     required/>{{$job->conditions}}</textarea>
                     </div>
                     <div class="mb-4">
                         <x-jet-label for="type" value="Područje rada"/>

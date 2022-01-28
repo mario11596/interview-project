@@ -1,3 +1,4 @@
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight w-10/12">
@@ -65,6 +66,16 @@
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="py-5">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex justify-center">
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg w-3/4 p-5">
+                    <div class="m-3">
+                        <iframe width="100%" height="400px" id="gmap_canvas" src="https://maps.google.com/maps?q={{$candidate->address}},%20{{$candidate->city}}&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+                        </iframe><style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}</style><style>.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}</style>           
                     </div>
                 </div>
             </div>

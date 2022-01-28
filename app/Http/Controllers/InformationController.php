@@ -51,7 +51,7 @@ class InformationController extends Controller
             'city' => 'required',
             'number_employees' => 'required',
             'type' => 'required',
-            "photo" => "required_without_all:name,address,city,number_employees,type|mimes:jpg"
+            "photo" => "required_without_all:name,address,city,number_employees,type|mimes:jpg,png"
         ]);
 
         if($request->file('photo')){
@@ -100,7 +100,7 @@ class InformationController extends Controller
             'status_type' => 'required',
             'OIB' => 'required',
             "file" => "required_without_all:name,surname,address,city,mobile_number,status_type,OIB|mimes:pdf|max:10000",
-            "photo" => "required_without_all:name,surname,address,city,mobile_number,status_type,OIB,file|mimes:jpg"
+            "photo" => "required_without_all:name,surname,address,city,mobile_number,status_type,OIB,file|mimes:jpg,png"
         ]);
         if($request->file('file')){
             $file = $request->file('file');
@@ -158,7 +158,7 @@ class InformationController extends Controller
 
     public function destroyPhoto($id) {
         $pathToFile = public_path().'/files/photos/'.$id.'.JPG';
-
+        
         if (File::exists($pathToFile)) {
             File::delete(public_path('/files/photos/'.$id.'.JPG'));
         }
