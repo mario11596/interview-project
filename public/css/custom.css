@@ -49,6 +49,7 @@
     background-color: #2bb956;
     color: white;
     border-radius: 25px;
+    margin:10px;
   }
 
   .alertCustomWarning {
@@ -94,5 +95,11 @@
       background: linear-gradient(166deg, rgba(31,38,80,1) 0%, rgba(31,38,80,0.41220238095238093) 50%, rgba(31,38,80,1) 100%);*/
 
   }
+
+  #map {
+    height: 400px;
+    width: 100%;
+  }
+  
 
 

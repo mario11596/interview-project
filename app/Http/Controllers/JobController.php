@@ -70,7 +70,8 @@ class JobController extends Controller
             'type' => 'required',
             'city' => 'required',
             'salary' => 'required',
-            'deadline' => 'required'
+            'deadline' => 'required',
+            'conditions' =>'required'
         ]);
 
         $job->description = $request['description'];
@@ -79,6 +80,7 @@ class JobController extends Controller
         $job->city = $request['city'];
         $job->salary = $request['salary'];
         $job->deadline = $request['deadline'];
+        $job->conditions =$request['conditions'];
         $job->company_id = $company;
 
         $job->save();

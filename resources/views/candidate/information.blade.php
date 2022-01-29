@@ -49,7 +49,7 @@
                                 @php($file = public_path().'/files/uploads/'.Auth::user()->email.'.pdf')
                                 @if(file_exists($file))
                                     <tr>
-                                        <td class="w-1/4 p-2">Životopis</td>
+                                        <td class="w-1/4 p-2">Životopis:</td>
                                         <td><a target="blank" href="{{ route('candidate.show_pdf', Auth::user()->email) }}" class="underline">Moj
                                                 životopis</a></td>
                                         <td><a href="{{ route('candidate.destroy_pdf',Auth::user()->email) }}"
@@ -63,7 +63,7 @@
                                     </tr>
                                 @else
                                     <tr>
-                                        <td class="w-1/4 p-2">Životopis</td>
+                                        <td class="w-1/4 p-2">Životopis:</td>
                                         <td style="color:red">Niste priložili životopis!</td>
                                     </tr>
                                 @endif

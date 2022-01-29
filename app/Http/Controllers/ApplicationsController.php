@@ -32,7 +32,6 @@ class ApplicationsController extends Controller
                         ->join('companies','companies.company_id','=', 'jobs.company_id')
                         ->get();
 
-        //dd($all_jobs);
         return view('candidate.applications-index', compact('all_jobs'));
     }
 
@@ -48,7 +47,6 @@ class ApplicationsController extends Controller
                         ->where('jobs.company_id',$user)
                         ->get();
 
-        //dd($all_jobs);
         return view('company.applications-index', compact('all_jobs'));
     }
 
@@ -130,13 +128,13 @@ class ApplicationsController extends Controller
        $userTo_email = $user_email;
 
        Mail::to($userTo_email)->send(new MailContact($request));
-       //return redirect('candidate.applications/email');
+       
        if(Auth::user()->is_company){
         return redirect('company/applications')->with('success', 'Uspješno poslan e-mail!');
     } else {
         return redirect('candidate/applications')->with('success', 'Uspješno poslan e-mail!');
     }
-       //return response()->json(['message' => 'Request completed']);
+       
     }
 
     public function showCandidate($id){

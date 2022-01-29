@@ -14,7 +14,7 @@ class AddDescriptionToCompanies extends Migration
     public function up()
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->text('description')->after('type');
+            $table->longText('description')->after('type')->nullable();
         });
     }
 

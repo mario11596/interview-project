@@ -16,7 +16,7 @@
                     <table class="table-fixed text-lg space-y-14 w-11/12" align="center">
                         <tbody class="divide-y divide-gray-300">
                         <tr>
-                            <th>Ime Tvrtke</th>
+                            <th>Tvrtka</th>
                             <th>Pozicija</th>
                             <th>Grad</th>
                             <th>Status</th>

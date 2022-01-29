@@ -14,7 +14,7 @@ class AddMessageToJobApplications extends Migration
     public function up()
     {
         Schema::table('job_applications', function (Blueprint $table) {
-            $table->string('message')->after('job_id');
+            $table->longText('message')->after('job_id')->nullable();
         });
     }
 
