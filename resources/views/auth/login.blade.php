@@ -39,12 +39,7 @@
                                     </div>
                                 </div>
 
-                                <div class="block mt-4">
-                                    <label for="remember_me" class="flex items-center">
-                                        <x-jet-checkbox id="remember_me" name="remember"/>
-                                        <span class="ml-2 text-sm text-gray-600">{{ __('Zapamti prijavu') }}</span>
-                                    </label>
-                                </div>
+                                </br>
 
                                 <div class="flex items-center justify-end mt-4">
                                     @if (Route::has('password.request'))

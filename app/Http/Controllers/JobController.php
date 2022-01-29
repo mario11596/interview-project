@@ -48,7 +48,6 @@ class JobController extends Controller
 
     public function edit($id) {
 
-
         $job = Job::find($id);
         $company = Company::find($job->company_id);
 
