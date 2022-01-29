@@ -11,8 +11,8 @@
                 @include('alert')
                 <div class="m-3">
                     <div class="flex">
-                        <div class="mr-4 h-28 w-28">
-                            <img src="{{ asset('files/photos/'.Auth::user()->email.'.JPG') }}" class="rounded-full"/>
+                        <div class="mr-8 h-32 w-36">
+                            <img src="{{ asset('files/photos/'.Auth::user()->email.'.JPG') }}" class="h-28 w-28 rounded-full"/>
                         </div>
                         <div class="space-y-1 flex flex-col w-full">
                             <div class="flex w-full flex items-center pb-8">

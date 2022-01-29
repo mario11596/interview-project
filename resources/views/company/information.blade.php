@@ -12,8 +12,8 @@
                 @include('alert')
                 <div class="m-3">
                     <div class="flex">
-                        <div class="mr-4 h-28 w-28">
-                            <img src="{{ asset('files/photos/'.Auth::user()->email.'.JPG') }}" class="rounded-full"/>
+                        <div class="mr-8 h-32 w-36">
+                            <img src="{{ asset('files/photos/'.Auth::user()->email.'.JPG') }}" class="h-28 w-28 rounded-full"/>
                         </div>
                         <div class="space-y-1 flex flex-col w-full">
                             <div class="flex w-full flex items-center pb-8">
@@ -26,7 +26,7 @@
                             <table class="table-fixed text-lg space-y-12 w-10/12">
                                 <tbody class="divide-y divide-gray-400">
                                 <tr>
-                                    <td class="w-1/4 p-2">Opis:</td>
+                                    <td class="w-1/4 p-2 align-top">Opis:</td>
                                     <td>{{$user->description}}</td>
                                 </tr>
                                 <tr>
