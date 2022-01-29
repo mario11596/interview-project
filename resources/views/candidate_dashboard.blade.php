@@ -20,7 +20,7 @@
                     </x-jet-button>
                 </div>
 
-                <select name="count" id="count" class="block mt-2 w-40 bg-gray-100">
+                <select name="count" id="count" style="border-radius: 10px;" class="block mr-2 w-40 bg-gray-100">
                     <option value="9" disabled selected>Broj oglasa po stranici</option>
                     <option value="3">3</option>
                     <option value="6">6</option>
@@ -29,19 +29,19 @@
                     <option value="15">15</option>
                     <option value="30">30</option>
                 </select>
-                <select name="sortby" id="sortby" class="block mt-2 w-40 bg-gray-100">
+                <select name="sortby" id="sortby" style="border-radius: 10px;" class="block mr-2 w-40 bg-gray-100">
                     <option value="" disabled selected>Sortiranje po</option>
                     <option value="position">Poziciji</option>
                     <option value="created_at">Datumu</option>
                     <option value="salary">Plaći</option>
                 </select>
-                <select name="sortdir" id="sortdir" class="block mt-2 w-40 bg-gray-100">
+                <select name="sortdir" id="sortdir" style="border-radius: 10px;" class="block mr-2 w-40 bg-gray-100">
                     <option value="asc" selected>Uzlazno</option>
                     <option value="desc">Silazno</option>
                 </select>
 
                 <a href="{{ route('candidate.candidate_dashboard')}}">
-                    <x-jet-button type="submit" class="ml-4 mr-1 hover:bg-blue-details">Sortiraj</x-jet-button>
+                    <x-jet-button type="submit" class="mr-1 h-10 hover:bg-blue-details">Sortiraj</x-jet-button>
                 </a>
             </form>
 
