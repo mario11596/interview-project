@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddMessageToJobApplications extends Migration
+class AlterJobsDescriptionVarcharToText extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddMessageToJobApplications extends Migration
      */
     public function up()
     {
-        Schema::table('job_applications', function (Blueprint $table) {
-            $table->longText('message')->after('job_id')->nullable();
+        Schema::table('jobs', function (Blueprint $table) {
+            $table->text('description')->change();
         });
     }
 
@@ -25,8 +25,8 @@ class AddMessageToJobApplications extends Migration
      */
     public function down()
     {
-        Schema::table('job_applications', function (Blueprint $table) {
-            $table->dropColumn('message');
+        Schema::table('jobs', function (Blueprint $table) {
+            $table->string('description')->change();
         });
     }
 }

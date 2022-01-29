@@ -10,9 +10,9 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg w-3/4 p-5">
                 <div class="m-3">
                     <div class="flex">
-                        <div class="mr-4 h-28 w-28">
+                        <div class="mr-8 h-32 w-36">
                             <img src="{{ asset('files/photos/'.$job->company->email_id.'.JPG') }}"
-                                 class="rounded-full"/>
+                                 class="h-28 w-28 rounded-full"/>
                         </div>
                         <div class="space-y-1 flex flex-col w-full">
                             <div class="flex w-full flex items-center pb-8">
@@ -25,8 +25,8 @@
                             <table class="table-fixed text-lg space-y-12 w-10/12">
                                 <tbody class="divide-y divide-gray-300">
                                 <tr>
-                                    <td class="w-1/4 p-2">Opis posla:</td>
-                                    <td>{{$job->description}}</td>
+                                    <td class="w-1/4 p-2 align-top">Opis posla:</td>
+                                    <td>{!! nl2br(e($job->description)) !!}</td>
                                 </tr>
                                 <tr>
                                     <td class="w-1/4 p-2">Tip:</td>
@@ -45,8 +45,8 @@
                                     <td>{{date('d.m.Y.', strtotime($job->deadline))}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="w-1/4 p-2">Uvjeti:</td>
-                                    <td>{{$job->conditions}}</td>
+                                    <td class="w-1/4 p-2 align-top">Uvjeti:</td>
+                                    <td>{!! nl2br(e($job->conditions)) !!}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -54,9 +54,17 @@
                         </div>
                     </div>
 
-                    <div class="mt-4 flex px-2 items-center justify-end">
+                    <div class="mt-4 flex items-center justify-between">
                         <div class="w-auto h-5">
-                            <a href="{{ route('candidate.show_company', [$job->job_id])}}">
+                                <x-jet-button TYPE="button" onClick="history.go(-1);" class="w-auto hover:bg-blue-details" title="Povratak">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                                    </svg>
+                                </x-jet-button>
+                        </div>
+
+                        <div class="w-auto h-5">
+                            <a href="{{ route('candidate.show_company', $job->job_id)}}">
                                 <x-jet-button class="hover:bg-blue-details w-auto">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                          class="bi bi-briefcase-fill mr-1" viewBox="0 0 16 16">

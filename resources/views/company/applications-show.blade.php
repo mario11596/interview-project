@@ -1,3 +1,4 @@
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight w-10/12">
@@ -10,10 +11,10 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg w-3/4 p-5">
                 <div class="m-3">
                     <div class="flex">
-                        <div class="mr-4 h-28 w-28">
+                        <div class="mr-8 h-32 w-36">
                         <img src="{{ asset('files/photos/'.$candidate->email_id.'.JPG') }}"
                                 alt="slika"
-                                class="h-14 w-14 rounded-full"/></div>
+                                class="h-28 w-28 rounded-full"/></div>
                         <div class="space-y-1 flex flex-col w-full">
                             <div class="flex w-full flex items-center pb-8">
                                 <div class="w-full h-3 mt-8">
@@ -50,7 +51,7 @@
                                 @if(file_exists($file))
                                 <tr>
                                     <td class="w-1/4 p-2">Životopis:</td>
-                                    <td><a href="{{ route('company.show_pdf',$candidate->email_id ) }}">životopis kandidata</a></td>
+                                    <td><a target="blank" href="{{ route('company.show_pdf',$candidate->email_id ) }}" class="underline">Životopis kandidata</a></td>
                                 </tr>
                                 @else
                                 <tr>
@@ -59,12 +60,28 @@
                                 </tr>
                                 @endif
                                 <tr>
-                                    <td class="w-1/4 p-2">Motivacijsko pismo:</td>
-                                    <td>{{ $message }}</td>
+                                    <td class="w-1/4 p-2 align-top">Motivacijsko pismo:</td>
+                                    <td>{!! nl2br(e($message)) !!}</td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+
+                    <div class="w-auto h-5">
+                        <x-jet-button TYPE="button" onClick="history.go(-1);" class="w-auto hover:bg-blue-details" title="Povratak"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                            </svg> </x-jet-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="py-5">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex justify-center">
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg w-3/4 p-5">
+                    <div class="m-3">
+                        <iframe width="100%" height="400px" id="gmap_canvas" src="https://maps.google.com/maps?q={{$candidate->address}},%20{{$candidate->city}}&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+                        </iframe><style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}</style><style>.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}</style>
                     </div>
                 </div>
             </div>

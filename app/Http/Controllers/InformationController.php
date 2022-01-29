@@ -14,7 +14,6 @@ class InformationController extends Controller
 {
     public function index()
     {
-
         $userCheck = User::findOrFail(Auth::id());
         $role = $userCheck->is_company;
 
@@ -42,7 +41,6 @@ class InformationController extends Controller
 
     public function updateCompany(Request $request, $id)
     {
-
         $company = Company::where("company_id", "=", $id)->get()->first();
 
         $request->validate([
@@ -51,7 +49,7 @@ class InformationController extends Controller
             'city' => 'required',
             'number_employees' => 'required',
             'type' => 'required',
-            "photo" => "required_without_all:name,address,city,number_employees,type|mimes:jpg"
+            "photo" => "required_without_all:name,address,city,number_employees,type|mimes:jpg,png"
         ]);
 
         if($request->file('photo')){
@@ -100,7 +98,7 @@ class InformationController extends Controller
             'status_type' => 'required',
             'OIB' => 'required',
             "file" => "required_without_all:name,surname,address,city,mobile_number,status_type,OIB|mimes:pdf|max:10000",
-            "photo" => "required_without_all:name,surname,address,city,mobile_number,status_type,OIB,file|mimes:jpg"
+            "photo" => "required_without_all:name,surname,address,city,mobile_number,status_type,OIB,file|mimes:jpg,png"
         ]);
         if($request->file('file')){
             $file = $request->file('file');
@@ -108,7 +106,7 @@ class InformationController extends Controller
             $filePath = public_path() . '/files/uploads/';
             $file->move($filePath, $fileName);
         }
-       // dd($request->file('photo'));
+       
         if($request->file('photo')){
             $file = $request->file('photo');
             $fileName = Auth::user()->email.'.'.$file->getClientOriginalExtension();
@@ -158,7 +156,7 @@ class InformationController extends Controller
 
     public function destroyPhoto($id) {
         $pathToFile = public_path().'/files/photos/'.$id.'.JPG';
-
+        
         if (File::exists($pathToFile)) {
             File::delete(public_path('/files/photos/'.$id.'.JPG'));
         }
@@ -170,8 +168,8 @@ class InformationController extends Controller
     }
 
     public function showCompany($id) {
-        $company_id = Job::findOrFail($id)->value('company_id');
-        $company = Company::findOrFail($company_id);
+        $company_id = Job::where('job_id', $id)->value('company_id');
+        $company = Company::where('company_id', $company_id)->first();
         return view('candidate.company-show', compact('company'));
     }
 }

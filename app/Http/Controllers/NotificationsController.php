@@ -16,7 +16,6 @@ class NotificationsController extends Controller
         } else {
             return view('notifications.indexCandidate', compact('notifications'));
         }
-
     }
 
     public function notificationMark(){
