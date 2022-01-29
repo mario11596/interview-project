@@ -27,7 +27,7 @@
                                 <tbody class="divide-y divide-gray-400">
                                 <tr>
                                     <td class="w-1/4 p-2 align-top">Opis:</td>
-                                    <td>{{$user->description}}</td>
+                                    <td>{!! nl2br(e($user->description)) !!}</td>
                                 </tr>
                                 <tr>
                                     <td class="w-1/4 p-2">Grad:</td>

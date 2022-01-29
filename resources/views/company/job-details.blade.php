@@ -26,7 +26,7 @@
                                 <tbody class="divide-y divide-gray-300">
                                 <tr>
                                     <td class="w-1/4 p-2 align-top">Opis posla:</td>
-                                    <td>{{$job->description}}</td>
+                                    <td>{!! nl2br(e($job->description)) !!}</td>
                                 </tr>
                                 <tr>
                                     <td class="w-1/4 p-2">Područje rada:</td>
@@ -46,7 +46,7 @@
                                 </tr>
                                 <tr>
                                     <td class="w-1/4 p-2 align-top">Uvjeti:</td>
-                                    <td>{{$job->conditions}}</td>
+                                    <td>{!! nl2br(e($job->conditions)) !!}</td>
                                 </tr>
                                 </tbody>
                             </table>

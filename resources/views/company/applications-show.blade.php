@@ -61,7 +61,7 @@
                                 @endif
                                 <tr>
                                     <td class="w-1/4 p-2 align-top">Motivacijsko pismo:</td>
-                                    <td>{{ $message }}</td>
+                                    <td>{!! nl2br(e($message)) !!}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -81,7 +81,7 @@
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg w-3/4 p-5">
                     <div class="m-3">
                         <iframe width="100%" height="400px" id="gmap_canvas" src="https://maps.google.com/maps?q={{$candidate->address}},%20{{$candidate->city}}&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
-                        </iframe><style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}</style><style>.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}</style>           
+                        </iframe><style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}</style><style>.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}</style>
                     </div>
                 </div>
             </div>
