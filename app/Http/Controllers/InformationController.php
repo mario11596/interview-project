@@ -14,7 +14,6 @@ class InformationController extends Controller
 {
     public function index()
     {
-
         $userCheck = User::findOrFail(Auth::id());
         $role = $userCheck->is_company;
 
@@ -42,7 +41,6 @@ class InformationController extends Controller
 
     public function updateCompany(Request $request, $id)
     {
-
         $company = Company::where("company_id", "=", $id)->get()->first();
 
         $request->validate([
@@ -108,7 +106,7 @@ class InformationController extends Controller
             $filePath = public_path() . '/files/uploads/';
             $file->move($filePath, $fileName);
         }
-       // dd($request->file('photo'));
+       
         if($request->file('photo')){
             $file = $request->file('photo');
             $fileName = Auth::user()->email.'.'.$file->getClientOriginalExtension();
