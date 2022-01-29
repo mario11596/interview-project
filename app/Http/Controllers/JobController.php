@@ -108,8 +108,8 @@ class JobController extends Controller
             ->where(function(Builder $builder) use ($search){
                 $builder->where('position', 'LIKE', "%{$search}%");
             })
-            ->orderBy('job_id')
-            ->paginate(9);
+            ->orderBy($request->input('sortby', 'created_at'), $request->input('sortdir', 'asc'))
+            ->paginate($request->input('count', 9));
 
         if(count($jobs) > 0){
             return view('candidate_dashboard', compact('jobs','search'));

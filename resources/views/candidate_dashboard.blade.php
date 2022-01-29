@@ -10,14 +10,41 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @include('alert')
             <form action="{{ route('candidate.search') }}" method="GET" role="search" class="flex items-end">
-                <input type="text" style="border-radius: 10px;" class="focus:border-blue" placeholder="Pretraži..." name="search" required/>
-                <x-jet-button type="submit" class="hover:bg-blue-details ml-1 ">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                         class="bi bi-search" viewBox="0 0 16 16" type="submit">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                    </svg>
-                </x-jet-button>
+                <div class="w-10/12 items-center flex">
+                    <input type="text" style="border-radius: 10px;" class="focus:border-blue" placeholder="Pretraži..." name="search"/>
+                    <x-jet-button type="submit" class="hover:bg-blue-details ml-1 ">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                             class="bi bi-search" viewBox="0 0 16 16" type="submit">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                        </svg>
+                    </x-jet-button>
+                </div>
+
+                <select name="count" id="count" class="block mt-2 w-40 bg-gray-100">
+                    <option value="9" disabled selected>Broj oglasa po stranici</option>
+                    <option value="3">3</option>
+                    <option value="6">6</option>
+                    <option value="9">9</option>
+                    <option value="12">12</option>
+                    <option value="15">15</option>
+                    <option value="30">30</option>
+                </select>
+                <select name="sortby" id="sortby" class="block mt-2 w-40 bg-gray-100">
+                    <option value="" disabled selected>Sortiranje po</option>
+                    <option value="position">Poziciji</option>
+                    <option value="created_at">Datumu</option>
+                    <option value="salary">Plaći</option>
+                </select>
+                <select name="sortdir" id="sortdir" class="block mt-2 w-40 bg-gray-100">
+                    <option value="asc" selected>Uzlazno</option>
+                    <option value="desc">Silazno</option>
+                </select>
+
+                <a href="{{ route('candidate.candidate_dashboard')}}">
+                    <x-jet-button type="submit" class="ml-4 mr-1 hover:bg-blue-details">Sortiraj</x-jet-button>
+                </a>
             </form>
+
             <br>
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="grid grid-cols-3 gap-4 flex flex-wrap justify-start m-3">
