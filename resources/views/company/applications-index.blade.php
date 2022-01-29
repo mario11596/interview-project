@@ -13,7 +13,7 @@
             @include('alert')
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <table class="table-fixed text-lg space-y-12 w-11/12 " align="center" style="white-space:nowrap;">
+                    <table class="table-fixed text-lg space-y-12 w-11/12 " align="center">
                         <tbody class="divide-y divide-gray-300">
                         <tr>
                             <th>Pozicija</th>

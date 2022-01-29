@@ -11,8 +11,8 @@
                 @include('alert')
                 <div class="m-3">
                     <div class="flex">
-                        <div class="mr-4 h-28 w-28">
-                            <img src="{{ asset('files/photos/'.Auth::user()->email.'.JPG') }}" class="rounded-full"/>
+                        <div class="mr-8 h-32 w-36">
+                            <img src="{{ asset('files/photos/'.Auth::user()->email.'.JPG') }}" class="h-28 w-28 rounded-full"/>
                         </div>
                         <div class="space-y-1 flex flex-col w-full">
                             <div class="flex w-full flex items-center pb-8">
@@ -25,7 +25,7 @@
                             <table class="table-fixed text-lg space-y-12 w-10/12">
                                 <tbody class="divide-y divide-gray-300">
                                 <tr>
-                                    <td class="w-1/4 p-2">Opis posla:</td>
+                                    <td class="w-1/4 p-2 align-top">Opis posla:</td>
                                     <td>{{$job->description}}</td>
                                 </tr>
                                 <tr>
@@ -45,7 +45,7 @@
                                     <td>{{date('d.m.Y.', strtotime($job->deadline))}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="w-1/4 p-2">Uvjeti:</td>
+                                    <td class="w-1/4 p-2 align-top">Uvjeti:</td>
                                     <td>{{$job->conditions}}</td>
                                 </tr>
                                 </tbody>
@@ -54,7 +54,16 @@
                         </div>
                     </div>
 
-                    <div class="mt-4 flex items-center justify-end">
+                    <div class="mt-4 flex items-center justify-between">
+                        <div class="w-auto h-5">
+                            <a href="{{route('company.company_dashboard')}}">
+                            <x-jet-button TYPE="button" class="w-auto hover:bg-blue-details" title="Povratak">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                                </svg>
+                            </x-jet-button>
+                            </a>
+                        </div>
                         <div class="w-auto h-5">
                             <a href="{{ route('company.edit_job', $job->job_id)}}">
                                 <x-jet-button class="hover:bg-blue-details w-auto">

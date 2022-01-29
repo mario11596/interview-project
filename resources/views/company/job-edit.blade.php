@@ -59,7 +59,7 @@
                             </svg>
                             SPREMI
                         </x-jet-button>
-                        <a href="{{ route('company.index_information') }}">
+                        <a href="{{ route('company.job_details', [$job->job_id])}}">
                             <x-jet-button type="button" class="hover:bg-red-delete">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-x-lg mr-1" viewBox="0 0 16 16">

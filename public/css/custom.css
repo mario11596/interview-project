@@ -1,7 +1,7 @@
 
 .hover\:bg-blue-details:hover {
     --tw-bg-opacity: 1;
-    background-color: rgba(104, 117, 245, 80%);
+    background-color: rgba(103, 111, 191, 80%);
 }
 
 .hover\:bg-red-delete:hover {
@@ -11,7 +11,12 @@
 
 .hover\:bg-green-new:hover {
     --tw-bg-opacity: 1;
-    background-color: rgba(48, 161, 37, 80%);
+    background-color: rgba(72, 184, 61, 80%);
+}
+
+.hover\:text-navigation:hover {
+    --tw-text-opacity: 1;
+    color: rgba(38, 116, 189, var(--tw-text-opacity));
 }
 
 .focus\:border-blue:focus {
@@ -32,6 +37,11 @@
 .text-green-acc {
     --tw-text-opacity: 1;
     color: rgba(56, 207, 41, 100%);
+}
+
+.text-footer-icon {
+    --tw-text-opacity: 1;
+    color: rgb(110, 143, 172);
 }
 
 .bg-blue-pending {
